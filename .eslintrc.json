@@ -9,7 +9,7 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "ignorePatterns": ["*.config.js", "**/node_modules/*"],
+  "ignorePatterns": ["*.config.js", "**/node_modules/*", "src/main.tsx"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,7 +20,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "indent": ["warn", 2],
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
     "quotes": ["warn", "double"],
     "semi": ["warn", "always"],
     "quote-props": ["warn", "as-needed"],
