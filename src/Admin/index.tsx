@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { doc, collection, setDoc } from "firebase/firestore";
+// import { doc, collection, setDoc } from "firebase/firestore";
 
 import { useFirebase } from "../firebase";
 import { tonesList, typesList, traitsList } from "../Comments";
@@ -48,7 +48,10 @@ export default function Admin() {
 
       <hr />
 
-      <div className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-4 justify-items-stretch items-center">
+      <div
+        className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-4
+          justify-items-stretch items-center"
+      >
         <span></span>
         <div>
           <Label

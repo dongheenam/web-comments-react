@@ -27,7 +27,6 @@ class Firebase {
   }
 }
 
-/* responsible for defining the React context */
 const FirebaseContext = createContext<Firebase | undefined>(undefined);
 
 export function useFirebase() {
@@ -43,7 +42,7 @@ interface FirebaseProviderProps {
   children: React.ReactNode;
 }
 
-export function FirebaseProvider({ children }: FirebaseProviderProps) {
+export default function FirebaseProvider({ children }: FirebaseProviderProps) {
   const app = useMemo(() => {
     return new Firebase(firebaseConfig);
   }, [firebaseConfig]);

@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
-type ThreeCheckboxProps = React.ComponentPropsWithoutRef<"input">;
+interface TraitProps extends React.ComponentPropsWithoutRef<"input"> {
+  status: number;
+}
 
-export default function ThreeCheckbox({ ...otherProps }: ThreeCheckboxProps) {
-  const [status, setStatus] = useState(1);
+export default function Trait({ status, ...otherProps }: TraitProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -24,12 +25,7 @@ export default function ThreeCheckbox({ ...otherProps }: ThreeCheckboxProps) {
 
   return (
     <>
-      <input
-        ref={inputRef}
-        type="checkbox"
-        onChange={() => setStatus((status + 1) % 3)}
-        {...otherProps}
-      />
+      <input ref={inputRef} type="checkbox" {...otherProps} />
     </>
   );
 }

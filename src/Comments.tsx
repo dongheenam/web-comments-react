@@ -1,6 +1,6 @@
-import { Suspense } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
-import { FirebaseProvider } from "./firebase";
+import FirebaseProvider from "./firebase";
 
 /* effort grades */
 export interface Effort {
@@ -95,10 +95,8 @@ export function pronouns(gender: gender) {
 
 export default function Comments() {
   return (
-    <Suspense fallback={<span>Loading database...</span>}>
-      <FirebaseProvider>
-        <Outlet />
-      </FirebaseProvider>
-    </Suspense>
+    <FirebaseProvider>
+      <Outlet />
+    </FirebaseProvider>
   );
 }

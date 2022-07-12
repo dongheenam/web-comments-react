@@ -1,11 +1,12 @@
+import React, { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Footer from "./Footer";
-import Comments from "./Comments";
 import TopNav from "./TopNav";
 import useDarkMode from "./useDarkMode";
 import Home from "./Home";
-import Admin from "./Admin";
-import Write from "./Write";
+const Comments = React.lazy(() => import("./Comments"));
+const Write = React.lazy(() => import("./Write"));
+const Admin = React.lazy(() => import("./Admin"));
 
 export default function App() {
   const [mode, toggleMode, loadDOM] = useDarkMode();
@@ -22,14 +23,16 @@ export default function App() {
           className="w-[min(95%,800px)] p-8 flex-grow
             bg-gray-100 dark:bg-gray-900"
         >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/comments" element={<Comments />}>
-              <Route path="write" element={<Write />} />
-              <Route path="admin" element={<Admin />} />
-            </Route>
-            <Route path="*" element={<Home />} />
-          </Routes>
+          <Suspense fallback={<span>Loading...</span>}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/comments" element={<Comments />}>
+                <Route path="write" element={<Write />} />
+                <Route path="admin" element={<Admin />} />
+              </Route>
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </Suspense>
         </main>
       </BrowserRouter>
       <Footer />
