@@ -20,11 +20,15 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_" }
+    ],
     "indent": ["warn", 2, { "SwitchCase": 1 }],
     "quotes": ["warn", "double"],
-    "semi": ["warn", "always"],
     "quote-props": ["warn", "as-needed"],
     "object-curly-spacing": ["warn", "always"],
+    "semi": ["warn", "always"],
     "react/react-in-jsx-scope": "off"
   }
 }

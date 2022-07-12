@@ -23,6 +23,13 @@
     @apply hover:bg-primary-600 dark:hover:bg-primary-400;
   }
 
+  /* text inputs */
+  .input-text {
+    @apply bg-white/low dark:bg-gray-700/low text-inherit rounded-md
+      focus:outline-primary-500 dark:focus:outline-primary-300
+      focus:ring-transparent focus:ring-offset-transparent;
+  }
+
   /* checkboxes and radios */
   .checkbox,
   .radio {
