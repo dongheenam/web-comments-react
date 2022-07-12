@@ -1,0 +1,13 @@
+@import "./tailwind.css";
+@import "./bases.css";
+@import "./utilities.css";
+@import "./components.css";
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,500|Roboto:300,400,500&display=swap);
+
+/* common elements */
+.mont {
+  font-family: "Montserrat", system-ui, sans-serif;
+}
+.roboto {
+  font-family: "Roboto", system-ui, sans-serif;
+}

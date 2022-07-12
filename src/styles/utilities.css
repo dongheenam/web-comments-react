@@ -1,0 +1,18 @@
+@layer utilities {
+  /* debugging */
+  .debug {
+    @apply border border-red-500;
+  }
+  /* item that cannot be interacted with */
+  .disabled {
+    @apply cursor-default opacity-low;
+  }
+  .disabled input[type="checkbox"],
+  .dsabled input[type="radio"] {
+    @apply text-current;
+  }
+  /* item that changes its opacity when interacted */
+  .ia-opacity {
+    @apply opacity-md hover:opacity-high active:opacity-100 checked:opacity-100;
+  }
+}

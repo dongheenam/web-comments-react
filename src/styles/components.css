@@ -1,0 +1,59 @@
+@layer components {
+  /* buttons */
+  .btn {
+    @apply p-2 px-4 font-semibold rounded-md border border-transparent;
+  }
+  .btn-icon {
+    @apply px-2;
+  }
+  /* labels as buttons */
+  .btn-label {
+    @apply inline-block p-1 px-4 font-semibold rounded-full cursor-pointer
+    border-2 border-gray-500;
+  }
+  .btn-label:not(.disabled) {
+    @apply hover:bg-primary-100 dark:hover:bg-primary-900/md;
+  }
+  input:checked + .btn-label {
+    @apply text-gray-100 dark:text-gray-950
+      border-primary-500 dark:border-primary-300
+      bg-primary-500 dark:bg-primary-300;
+  }
+  input:checked + .btn-label:not(.disabled) {
+    @apply hover:bg-primary-600 dark:hover:bg-primary-400;
+  }
+
+  /* checkboxes and radios */
+  .checkbox,
+  .radio {
+    @apply bg-transparent 
+      text-primary-500 dark:text-primary-300
+      focus:outline-primary-500 dark:focus:outline-primary-300
+      focus:ring-transparent focus:ring-offset-transparent;
+  }
+  .checkbox {
+    @apply rounded-sm;
+  }
+
+  /* switches */
+  .switch {
+    @apply relative w-[1.7em] h-[1em];
+  }
+  .switch input {
+    @apply absolute inset-0 w-full h-full opacity-0 z-[1];
+  }
+  .s-slider {
+    @apply w-[1.7em] h-[.7em] absolute inset-y-0 my-auto rounded-full z-0
+      transition-all bg-gray-300 dark:bg-gray-600;
+  }
+  input:checked ~ .s-slider {
+    @apply bg-primary-300 dark:bg-primary-700;
+  }
+  .s-thumb {
+    @apply w-[1em] h-[1em] rounded-full absolute inset-y-0 my-auto
+    bg-gray-500 transition-all;
+  }
+  input:checked ~ .s-thumb {
+    @apply translate-x-[.7em] bg-primary-600 dark:bg-primary-300;
+  }
+}
