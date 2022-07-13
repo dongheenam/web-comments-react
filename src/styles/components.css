@@ -1,5 +1,14 @@
 @layer components {
   /* buttons */
+  .btn,
+  .btn-icon,
+  .btn-label,
+  .btn-tri {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
   .btn {
     @apply p-2 px-4 font-semibold rounded-md border border-transparent;
   }
@@ -7,20 +16,37 @@
     @apply px-2;
   }
   /* labels as buttons */
-  .btn-label {
+  .btn-label,
+  .btn-tri {
     @apply inline-block p-1 px-4 font-semibold rounded-full cursor-pointer
-    border-2 border-gray-500;
+    border-2;
   }
-  .btn-label:not(.disabled) {
+  .btn-label,
+  input:indeterminate + .btn-tri {
+    @apply border-gray-500 bg-transparent text-inherit;
+  }
+  .btn-label:not(.disabled),
+  input:indeterminate + .btn-tri:not(.disabled) {
     @apply hover:bg-primary-100 dark:hover:bg-primary-900/md;
   }
-  input:checked + .btn-label {
+  input:checked + .btn-label,
+  input:checked + .btn-tri {
     @apply text-gray-100 dark:text-gray-950
       border-primary-500 dark:border-primary-300
       bg-primary-500 dark:bg-primary-300;
   }
-  input:checked + .btn-label:not(.disabled) {
+  input:checked + .btn-label:not(.disabled),
+  input:checked + .btn-tri:not(.disabled) {
     @apply hover:bg-primary-600 dark:hover:bg-primary-400;
+  }
+  /* tri-state buttons */
+  .btn-tri {
+    @apply text-gray-100 dark:text-gray-950
+      border-red-500 dark:border-red-300
+      bg-red-500 dark:bg-red-300;
+  }
+  .btn-tri:not(.disabled) {
+    @apply hover:bg-red-600 dark:hover:bg-red-400;
   }
 
   /* text inputs */

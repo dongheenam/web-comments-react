@@ -10,6 +10,7 @@ export default function TextInput({
 }: TextInputProps) {
   const textInputProps = {
     type: "text",
+    id: id,
     className: `input-text w-full ${className}`,
     ...otherProps,
   };

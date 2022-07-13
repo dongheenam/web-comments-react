@@ -8,6 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import TraitCheckbox from "../components/TraitCheckbox";
 
 interface Comment {
   comment: string;
@@ -25,6 +26,7 @@ interface RadioValues {
 type HandleChange = (event: React.ChangeEvent<HTMLInputElement>) => void;
 
 export default function Comments() {
+  const [status, setStatus] = useState(1);
   const [commentsDB, setCommentsDB] = useState<Array<ServerComment>>([]);
   const [comment, setComment] = useState<Comment>();
   const [radioValues, setRadioValues] = useState<RadioValues>({
@@ -81,6 +83,15 @@ export default function Comments() {
   return (
     <>
       <h2>Upload comment</h2>
+      <label htmlFor="tcb">
+        <TraitCheckbox
+          id="tcb"
+          className="checkbox"
+          status={status}
+          onClick={() => setStatus((status + 1) % 3)}
+        />
+        Current status: {status}
+      </label>
       <span>Comment types: </span>
       <input
         type="text"

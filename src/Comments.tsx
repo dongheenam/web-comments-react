@@ -74,15 +74,14 @@ export type CommentsCount = {
 };
 
 /* decorators for the comment */
-type gender = "male" | "female" | "other";
+export type Gender = "male" | "female" | "other";
 export interface CommentDecorator {
-  gender: gender;
   topic: string;
   academic: 5 | 4 | 3 | 2 | 1;
   frequency: "always" | "usually" | "sometimes";
 }
 
-export function pronouns(gender: gender) {
+export function pronouns(gender: Gender) {
   switch (gender) {
     case "male":
       return {
