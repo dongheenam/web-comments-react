@@ -15,27 +15,29 @@ export default function App() {
   return (
     <div
       id="app"
-      className={`h-max min-h-screen flex flex-col text-lg items-center ${mode}`}
+      className={`h-screen flex flex-col text-lg items-center ${mode}`}
     >
       <BrowserRouter>
         <TopNav mode={mode} toggleMode={toggleMode} />
         <main
-          className="w-[min(95%,800px)] p-8 flex-grow
-            bg-gray-100 dark:bg-gray-900"
+          className="w-[min(95%,1200px)] p-8 overflow-y-scroll 
+          flex-grow bg-gray-100 dark:bg-gray-900 flex flex-col"
         >
-          <Suspense fallback={<span>Loading...</span>}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/comments" element={<Comments />}>
-                <Route path="write" element={<Write />} />
-                <Route path="admin" element={<Admin />} />
-              </Route>
-              <Route path="*" element={<Home />} />
-            </Routes>
-          </Suspense>
+          <div className="flex-grow">
+            <Suspense fallback={<span>Loading...</span>}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/comments" element={<Comments />}>
+                  <Route path="write" element={<Write />} />
+                  <Route path="admin" element={<Admin />} />
+                </Route>
+                <Route path="*" element={<Home />} />
+              </Routes>
+            </Suspense>
+          </div>
+          <Footer />
         </main>
       </BrowserRouter>
-      <Footer />
     </div>
   );
 }

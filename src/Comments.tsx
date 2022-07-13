@@ -23,18 +23,23 @@ export const typesList = {
   asse: "assessment",
 } as const;
 export const traitsList = {
+  "pers-xx-resp": "Respectful and quiet",
   "acad-xx-topi": "Knows a certain topic well",
   "acad-xx-skil": "Has a specific skill set",
-  "acad-xx-erro": "Minimises errors",
-  "acad-xx-enri": "Works on enrichment tasks",
-  "pers-xx-resp": "Respectful and quiet",
-  "pers-po-punc": "Punctual",
+  "asse-xx-resu": "Got a good assessment result",
+  "asse-xx-erro": "Minimises errors during exam",
+  "asse-xx-time": "Works well under time pressure",
+  "asse-xx-cour": "Follows HSC/IB course requirements",
+  "pers-po-punc": "Comes to class on time",
   "pers-po-equi": "Brings equipments",
   "pers-po-catc": "Catches up on missed work",
-  "pers-ia-appl": "Applies consistently",
+  "pers-ia-appl": "Applies themself",
   "pers-ia-askh": "Seeks help outside class",
   "pers-ia-resi": "Shows resilience",
-  "pers-ia-feed": "Seeks feedback on assessment",
+  "acad-ia-addi": "Completes optional components",
+  "acad-ia-enri": "Works on enrichment tasks",
+  "asse-ia-feed": "Seeks feedback on assessment",
+  "asse-ia-refl": "Acts on assessment feedback",
   "beha-eu-clti": "Uses class time effectively",
   "beha-eu-acti": "Engages in classroom activities",
   "beha-eu-cont": "Contributes to class discussions",
@@ -58,13 +63,17 @@ export type Comment = {
   trait?: keyof typeof traitsList;
 };
 
+export type CommentsCount = {
+  [trait in keyof typeof traitsList]: number;
+};
+
 /* decorators for the comment */
 type gender = "male" | "female" | "other";
 export interface CommentDecorator {
   gender: gender;
   topic: string;
   academic: 5 | 4 | 3 | 2 | 1;
-  strength: "always" | "usually" | "sometimes";
+  frequency: "always" | "usually" | "sometimes";
 }
 
 export function pronouns(gender: gender) {

@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from "react";
 
-interface TraitProps extends React.ComponentPropsWithoutRef<"input"> {
+interface TraitCheckboxProps extends React.ComponentPropsWithoutRef<"input"> {
   status: number;
 }
 
-export default function Trait({ status, ...otherProps }: TraitProps) {
+export default function TraitCheckbox({
+  status,
+  ...otherProps
+}: TraitCheckboxProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
