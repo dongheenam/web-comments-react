@@ -1,5 +1,5 @@
 import { TopicSkill, TraitsStatus } from ".";
-import { Gender, traitsList } from "../Comments";
+import { Gender, Comment, traitsList } from "../Comments";
 import Button from "../components/Button";
 import Explanation from "../components/Explanation";
 import LabelButton from "../components/LabelButton";
@@ -24,16 +24,22 @@ interface OptionsProps {
     traitsStatus: TraitsStatus;
     handleTraitsChange: (e: React.SyntheticEvent<HTMLInputElement>) => void;
   };
+  commentsState: {
+    commentList: Array<Comment>;
+    fetchComments: () => Promise<void>;
+  };
 }
 
 export default function Options({
   genderState,
   topicSkillState,
   traitsState,
+  commentsState,
 }: OptionsProps) {
   const { gender, handleGenderChange } = genderState;
   const { topics, skills, handleTopicSkillNameChange } = topicSkillState;
   const { traitsStatus, handleTraitsChange } = traitsState;
+  const { fetchComments } = commentsState;
 
   return (
     <>
@@ -196,8 +202,12 @@ export default function Options({
         </div>
         <span></span>
         <div>
-          <Button variant="outline" color="primary">
-            Fetch comments
+          <Button
+            variant="outline"
+            color="primary"
+            onClick={() => fetchComments()}
+          >
+            Load comments
           </Button>
         </div>
       </div>

@@ -7,11 +7,13 @@
 import React, { useState } from "react";
 import Explanation from "../components/Explanation";
 import { traitsList } from "../Comments";
-import type { Gender } from "../Comments";
+import type { Gender, Comment } from "../Comments";
 import Options from "./Options";
 import Button from "../components/Button";
 import Select from "./Select";
 import Results from "./Results";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useFirebase } from "../firebase";
 
 export interface TopicSkill {
   name: string;
@@ -24,6 +26,7 @@ export type TraitsStatus = {
 export default function Write() {
   /* for debugging */
   const [debug, setDebug] = useState<boolean>(false);
+  const [appStatus, setAppStatus] = useState<string>();
 
   /* gender input */
   const [gender, setGender] = useState<Gender>("male");
@@ -83,22 +86,77 @@ export default function Write() {
     });
   }
 
+  /* fetching the comments */
+  const [commentList, setCommentList] = useState<Array<Comment>>([]);
+  const db = useFirebase().db;
+  async function fetchComments() {
+    let appStatus = "fetching the comments... ";
+    setAppStatus(appStatus);
+    // filtering positive and negative traits
+    const positiveTraits = Object.entries(traitsStatus)
+      .filter(([_key, val]) => val === 2)
+      .map(([key, _val]) => key);
+    const negativeTraits = Object.entries(traitsStatus)
+      .filter(([_key, val]) => val === 0)
+      .map(([key, _val]) => key);
+
+    if (positiveTraits.length + negativeTraits.length === 0) {
+      alert("Select at least one positive or negative traits!");
+      setAppStatus("failed fetch (0 traits selected)");
+      return;
+    }
+
+    appStatus +=
+      `with positive traits [${positiveTraits.join(", ")}], ` +
+      `negative traits [${negativeTraits.join(", ")}]... `;
+    setAppStatus(appStatus);
+
+    // queries targeting the traits
+    const commentsCollection = collection(db, "comments");
+    const qPositive = query(
+      commentsCollection,
+      where("trait", "in", positiveTraits),
+      where("tone", "==", "+")
+    );
+    const qNegative = query(
+      commentsCollection,
+      where("trait", "in", negativeTraits),
+      where("tone", "==", "-")
+    );
+    const querySnapshots = await Promise.all([
+      getDocs(qPositive),
+      getDocs(qNegative),
+    ]);
+    const comments = querySnapshots.map((qS) =>
+      qS.docs.map((doc) => doc.data() as Comment)
+    );
+
+    setCommentList(comments.flat(1));
+    appStatus +=
+      `loaded ${comments[0].length} positive comment(s) ` +
+      `and ${comments[1].length} negative comment(s)!`;
+    setAppStatus(appStatus);
+  }
+
+  /* states to be passed onto */
+  const genderState = { gender, handleGenderChange };
+  const topicSkillState = { topics, skills, handleTopicSkillNameChange };
+  const traitsState = { traitsStatus, handleTraitsChange };
+  const commentsState = { commentList, fetchComments };
+
   /* render JSX */
   return (
     <>
       <h1>Comment maker</h1>
       <Options
-        genderState={{ gender, handleGenderChange }}
-        topicSkillState={{ topics, skills, handleTopicSkillNameChange }}
-        traitsState={{ traitsStatus, handleTraitsChange }}
+        genderState={genderState}
+        topicSkillState={topicSkillState}
+        traitsState={traitsState}
+        commentsState={commentsState}
       />
 
       <hr />
-
-      <Select />
-
-      <hr />
-      <Results />
+      <Results genderState={genderState} commentsState={commentsState} />
 
       <hr />
 
@@ -107,10 +165,12 @@ export default function Write() {
       </div>
       {debug && (
         <div className="grid grid-flow-row">
+          <Explanation>Status: {appStatus}</Explanation>
           <Explanation>Gender: {gender}</Explanation>
           <Explanation>Topics: {JSON.stringify(topics)}</Explanation>
           <Explanation>Skills: {JSON.stringify(skills)}</Explanation>
           <Explanation>Traits: {JSON.stringify(traitsStatus)}</Explanation>
+          <Explanation>Comments: {JSON.stringify(commentList)}</Explanation>
         </div>
       )}
     </>

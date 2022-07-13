@@ -81,7 +81,7 @@ export interface CommentDecorator {
   frequency: "always" | "usually" | "sometimes";
 }
 
-export function pronouns(gender: Gender) {
+export function makePronouns(gender: Gender) {
   switch (gender) {
     case "male":
       return {
