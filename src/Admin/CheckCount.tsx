@@ -13,6 +13,7 @@ export default function CheckCount() {
   const functions = getFunctions(useFirebase().app, "australia-southeast1");
 
   async function triggerCount() {
+    setStatus("request sent! awaiting response...");
     try {
       const setCountComments = httpsCallable(functions, "setCountComments");
       const countsData = (await setCountComments()) as { data: CommentsCount };

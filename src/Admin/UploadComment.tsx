@@ -7,7 +7,6 @@ import {
   query,
   getDocs,
 } from "firebase/firestore";
-import { findBestMatch } from "string-similarity";
 
 import { useFirebase } from "../firebase";
 import { tonesList, typesList, traitsList } from "../Comments";
@@ -29,10 +28,10 @@ function parseText(commentText: string): string {
   return (
     commentText
       /* gender pronouns */
-      .replace(/\b(himself|herself|themself)\b(?!$)/, "<reflexive>")
-      .replace(/\b(his|their)\b(?!$)/, "<possessive>")
-      .replace(/\b(him|them)\b(?!$)/, "<object>")
-      .replace(/\b(he|she|they)\b(?!$)/, "<subject>")
+      .replace(/\b(himself|herself)\b(?!$)/, "<reflexive>")
+      .replace(/\b(his)\b(?!$)/, "<possessive>")
+      .replace(/\b(him)\b(?!$)/, "<object>")
+      .replace(/\b(he|she)\b(?!$)/, "<subject>")
       /* other descriptors */
       .replace(/\b(excellent|great|strong|good|sound)\b(?!$)/, "<strength>")
       .replace(/\b(always|usually|sometimes)\b(?!$)/, "<frequency>")
@@ -54,6 +53,7 @@ export default function UploadComment() {
     tone: "+",
     type: "acad",
   });
+  const [commentList, setCommentList] = useState<Array<string>>();
 
   const db = useFirebase().db;
 
@@ -81,6 +81,11 @@ export default function UploadComment() {
       text: newText,
     });
   }, [comment.text]);
+  // resets fetched comment list when the trait changes
+  useEffect(() => {
+    setCommentList([]);
+    setStatus("awaiting input...");
+  }, [comment.trait]);
 
   /* FOR UPLOADING TO SERVER */
   async function uploadComment() {
@@ -90,7 +95,7 @@ export default function UploadComment() {
         throw new Error("pronouns exist, please replace!");
       }
       if (uppercasesExist(comment.text)) {
-        throw new Error("uppercase letters exist, please replace!");
+        setStatus("uppercase letters exist, please replace!");
       }
 
       // upload comment
@@ -105,35 +110,33 @@ export default function UploadComment() {
     }
   }
 
-  /* CHECKING IF THE COMMENT ALREADY EXISTS */
-  async function compareCommentWithServer() {
+  /* FETCH THE COMMENTS WITH THE SELECTED TRAIT */
+  async function fetchComments() {
     try {
+      if (!comment.trait) {
+        setStatus("no traits selected!");
+        return;
+      }
       // get all comments with the same trait
-      const queryDB = comment.trait
-        ? where("trait", "==", comment.trait)
-        : where("trait", "!=", null);
-      const q = query(collection(db, "comments"), queryDB);
+      const q = query(
+        collection(db, "comments"),
+        where("trait", "==", comment.trait)
+      );
       const querySnapshot = await getDocs(q);
       const commentsFromServer = querySnapshot.docs.map(
         (doc) => doc.data() as Comment
       );
-      const commentTextsFromServer = commentsFromServer.map(
-        (comment) => comment.text
-      );
+      const commentTextsFromServer = commentsFromServer
+        .sort((ca, cb) => (ca.text > cb.text ? 1 : -1))
+        .map((comment) => `[${comment.trait} ${comment.tone}] ${comment.text}`);
 
       if (commentTextsFromServer.length === 0) {
         setStatus("comments matching the trait does not exist on the server.");
         return;
       }
-      // compare the comments text
-      const matchResult = findBestMatch(comment.text, commentTextsFromServer);
-      const rating = matchResult.bestMatch.rating;
-      const matchedComment = commentsFromServer[matchResult.bestMatchIndex];
-      setStatus(
-        `checked ${commentTextsFromServer.length} comment(s), ` +
-          `best match is [${Math.floor(rating * 100)}%]: ` +
-          `${JSON.stringify(matchedComment)}`
-      );
+
+      setStatus("comments fetched!");
+      setCommentList(commentTextsFromServer);
     } catch (error) {
       setStatus(`check failed: ${error}`);
     }
@@ -334,7 +337,7 @@ export default function UploadComment() {
           variant="outline"
           color="primary"
           className="mb-4"
-          onClick={() => compareCommentWithServer()}
+          onClick={() => fetchComments()}
         >
           Check duplicate
         </Button>
@@ -347,9 +350,12 @@ export default function UploadComment() {
           Submit comment
         </Button>
       </div>
-      <div className="flex flex-col h-16">
+      <div className="flex flex-col">
         <Explanation>Parsed comment: {JSON.stringify(comment)}</Explanation>
         <Explanation>Status: {status}</Explanation>
+        {commentList?.map((item) => (
+          <Explanation key={item.slice(10)}>{item}</Explanation>
+        ))}
       </div>
     </>
   );
