@@ -48,7 +48,7 @@ export const traitsList = {
   "beha-eu-tech": "Uses technologies appropriately",
   "beha-md-home": "Completes all homework",
   "pers-xx-resp": "Respectful and quiet",
-  "pers-xx-posi": "Positive",
+  "pers-xx-posi": "Shows positive attitude",
   "pers-po-punc": "Comes to class on time",
   "pers-po-equi": "Brings equipments",
   "pers-po-catc": "Catches up on missed work",

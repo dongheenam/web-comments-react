@@ -9,7 +9,6 @@ import Explanation from "../components/Explanation";
 import { traitsList } from "../Comments";
 import type { Gender, Comment } from "../Comments";
 import Options from "./Options";
-import Button from "../components/Button";
 import Select from "./Select";
 import Results from "./Results";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -25,7 +24,6 @@ export type TraitsStatus = {
 
 export default function Write() {
   /* for debugging */
-  const [debug, setDebug] = useState<boolean>(false);
   const [appStatus, setAppStatus] = useState<string>();
 
   /* gender input */
@@ -160,10 +158,8 @@ export default function Write() {
 
       <hr />
 
-      <div className="text-sm">
-        <Button onClick={() => setDebug(!debug)}>Toggle details</Button>
-      </div>
-      {debug && (
+      <details>
+        <summary className="text-base text-gray-500">Show geeky stuff</summary>
         <div className="grid grid-flow-row">
           <Explanation>Status: {appStatus}</Explanation>
           <Explanation>Gender: {gender}</Explanation>
@@ -172,7 +168,7 @@ export default function Write() {
           <Explanation>Traits: {JSON.stringify(traitsStatus)}</Explanation>
           <Explanation>Comments: {JSON.stringify(commentList)}</Explanation>
         </div>
-      )}
+      </details>
     </>
   );
 }

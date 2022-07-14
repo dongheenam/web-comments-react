@@ -78,6 +78,9 @@ export default function Options({
               className="text-lg"
               value={topics[idx]?.name}
               onChange={handleTopicSkillNameChange}
+              placeholder={
+                idx === 0 ? "starts with a capital (Algebra, Numbers, ...)" : ""
+              }
             />
           ))}
         </div>
@@ -93,6 +96,9 @@ export default function Options({
               className="text-lg"
               value={skills[idx]?.name}
               onChange={handleTopicSkillNameChange}
+              placeholder={
+                idx === 0 ? "starts with a verb (adding fractions, ...)" : ""
+              }
             />
           ))}
         </div>
