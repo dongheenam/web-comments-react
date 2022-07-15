@@ -21,8 +21,8 @@ export default function Admin() {
           <Button color="red" variant="outline" onClick={() => signOut()}>
             Sign out
           </Button>
-          <Explanation className="overflow-hidden break-all">
-            Current user: {JSON.stringify(user)}
+          <Explanation className="overflow-hidden break-all mt-4">
+            Current user: {JSON.stringify({ email: user.email, uid: user.uid })}
           </Explanation>
         </>
       ) : (

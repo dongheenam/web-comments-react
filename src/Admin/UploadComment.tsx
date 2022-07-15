@@ -220,8 +220,8 @@ export default function UploadComment() {
           <Explanation>Punctuality and Organisation</Explanation>
           <div className="mb-4 flex gap-2 text-base flex-wrap">
             {Object.entries(traitsList)
-              .filter(([key, _label]) => key.slice(5, 7) === "po")
-              .map(([key, label]) => (
+              .filter(([key, _labels]) => key.slice(5, 7) === "po")
+              .map(([key, labels]) => (
                 <LabelButton
                   key={`trait-${key}`}
                   input={
@@ -235,15 +235,15 @@ export default function UploadComment() {
                     />
                   }
                 >
-                  {short ? key : label}
+                  {short ? key : labels[1]}
                 </LabelButton>
               ))}
           </div>
           <Explanation>Effective Use of Class Time and Technology</Explanation>
           <div className="mb-4 flex gap-2 text-base flex-wrap">
             {Object.entries(traitsList)
-              .filter(([key, _label]) => key.slice(5, 7) === "eu")
-              .map(([key, label]) => (
+              .filter(([key, _labels]) => key.slice(5, 7) === "eu")
+              .map(([key, labels]) => (
                 <LabelButton
                   key={`trait-${key}`}
                   input={
@@ -257,15 +257,15 @@ export default function UploadComment() {
                     />
                   }
                 >
-                  {short ? key : label}
+                  {short ? key : labels[1]}
                 </LabelButton>
               ))}
           </div>
           <Explanation>Independent Approach to Learning</Explanation>
           <div className="mb-4 flex gap-2 text-base flex-wrap">
             {Object.entries(traitsList)
-              .filter(([key, _label]) => key.slice(5, 7) === "ia")
-              .map(([key, label]) => (
+              .filter(([key, _labels]) => key.slice(5, 7) === "ia")
+              .map(([key, labels]) => (
                 <LabelButton
                   key={`trait-${key}`}
                   input={
@@ -279,15 +279,15 @@ export default function UploadComment() {
                     />
                   }
                 >
-                  {short ? key : label}
+                  {short ? key : labels[1]}
                 </LabelButton>
               ))}
           </div>
           <Explanation>Meeting Deadlines</Explanation>
           <div className="mb-4 flex gap-2 text-base flex-wrap">
             {Object.entries(traitsList)
-              .filter(([key, _label]) => key.slice(5, 7) === "md")
-              .map(([key, label]) => (
+              .filter(([key, _labels]) => key.slice(5, 7) === "md")
+              .map(([key, labels]) => (
                 <LabelButton
                   key={`trait-${key}`}
                   input={
@@ -301,15 +301,15 @@ export default function UploadComment() {
                     />
                   }
                 >
-                  {short ? key : label}
+                  {short ? key : labels[1]}
                 </LabelButton>
               ))}
           </div>
           <Explanation>Others</Explanation>
           <div className="flex gap-2 text-base flex-wrap">
             {Object.entries(traitsList)
-              .filter(([key, _label]) => key.slice(5, 7) === "xx")
-              .map(([key, label]) => (
+              .filter(([key, _labels]) => key.slice(5, 7) === "xx")
+              .map(([key, labels]) => (
                 <LabelButton
                   key={`trait-${key}`}
                   input={
@@ -323,7 +323,7 @@ export default function UploadComment() {
                     />
                   }
                 >
-                  {short ? key : label}
+                  {short ? key : labels[1]}
                 </LabelButton>
               ))}
           </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import FirebaseProvider from "./firebase";
 
@@ -23,42 +22,186 @@ export const typesList = {
   pers: "personality",
 } as const;
 export const traitsList = {
-  "acad-xx-topi": "Knows a certain topic well",
-  "acad-xx-skil": "Has a specific skill set",
-  "acad-xx-word": "Solves word problems",
-  "acad-ia-addi": "Completes optional components",
-  "acad-ia-enri": "Works on enrichment tasks",
-  "acad-ia-revi": "Revises regularly",
-  "acad-ia-inqu": "Delves into problems",
-  "asse-xx-resu": "Got a good assessment result",
-  "asse-xx-solu": "Presents detailed solutions",
-  "asse-xx-erro": "Minimises errors during exam",
-  "asse-xx-time": "Works well under time pressure",
-  "asse-xx-cour": "Follows HSC/IB course requirements",
-  "asse-ia-feed": "Seeks feedback on assessment",
-  "asse-ia-refl": "Acts on assessment feedback",
-  "asse-md-time": "Submits work on time",
-  "asse-md-prep": "Prepares for assessments",
-  "asse-md-plan": "Plans for assessments",
-  "beha-eu-clti": "Uses class time effectively",
-  "beha-eu-acti": "Engages in classroom activities",
-  "beha-eu-cont": "Contributes to class discussions",
-  "beha-eu-note": "Maintains a detailed note",
-  "beha-eu-coll": "Works collaboratively",
-  "beha-eu-tech": "Uses technologies appropriately",
-  "beha-md-home": "Completes all homework",
-  "pers-xx-resp": "Respectful and quiet",
-  "pers-xx-posi": "Shows positive attitude",
-  "pers-po-punc": "Comes to class on time",
-  "pers-po-equi": "Brings equipments",
-  "pers-po-catc": "Catches up on missed work",
-  "pers-eu-pace": "Works at a reasonable pace",
-  "pers-eu-askq": "Asks help in class",
-  "pers-eu-hpot": "Helps others in class",
-  "pers-ia-appl": "Applies themself",
-  "pers-ia-askh": "Seeks help outside class",
-  "pers-ia-resi": "Shows resilience",
+  "acad-xx-topi": [
+    "Improve on a certain topic",
+    "Knows a certain topic well?",
+    "Knows a certain topic well",
+  ],
+  "acad-xx-skil": [
+    "Practise a certain skill",
+    "Has a specific skill set?",
+    "Has a specific skill set",
+  ],
+  "acad-xx-word": [
+    "Practise word problems",
+    "Solves word problems?",
+    "Solves word problems",
+  ],
+  "acad-ia-addi": [
+    "Try optional work",
+    "Completes optional work?",
+    "Completes optional work",
+  ],
+  "acad-ia-enri": [
+    "Try enrichment tasks",
+    "Works on enrichment tasks?",
+    "Works on enrichment tasks",
+  ],
+  "acad-ia-revi": [
+    "Revise regularly",
+    "Revises regularly?",
+    "Revises regularly",
+  ],
+  "acad-ia-inqu": [
+    "Improve inquiry skills",
+    "Has good inquiry skills?",
+    "Has good inquiry skills",
+  ],
+  "asse-xx-resu": [
+    "Disappointing assessment result",
+    "Got a good assessment result?",
+    "Got a good assessment result",
+  ],
+  "asse-xx-solu": [
+    "Present detailed solutions",
+    "Presents detailed solutions?",
+    "Presents detailed solutions",
+  ],
+  "asse-xx-erro": [
+    "Develop strategies for minimising errors",
+    "Minimises errors during exam?",
+    "Makes no errors during exam",
+  ],
+  "asse-xx-time": [
+    "Develop strategies for time management",
+    "Works well under time pressure?",
+    "Works well under time pressure",
+  ],
+  "asse-xx-cour": [
+    "Follow the course requirements",
+    "Follows HSC/IB course requirements?",
+    "Follows HSC/IB course requirements",
+  ],
+  "asse-ia-feed": [
+    "Seek feedback from teacher",
+    "Seeks feedback on assessment?",
+    "Seeks feedback on assessment",
+  ],
+  "asse-ia-refl": [
+    "Act on the feedback given",
+    "Acts on assessment feedback?",
+    "Acts on assessment feedback",
+  ],
+  "asse-md-time": [
+    "Submit work on time",
+    "Submits work on time?",
+    "Submits work on time",
+  ],
+  "asse-md-prep": [
+    "Spend time preparing for tests",
+    "Prepares for assessments?",
+    "Prepares for assessments",
+  ],
+  "asse-md-plan": [
+    "Make plans for assessments",
+    "Plans for assessments?",
+    "Plans for assessments",
+  ],
+  "beha-eu-clti": [
+    "Be productive in class",
+    "Uses class time effectively?",
+    "Uses class time effectively",
+  ],
+  "beha-eu-acti": [
+    "Be active during activities",
+    "Engages in activities?",
+    "Engages in activities",
+  ],
+  "beha-eu-cont": [
+    "Be vocal during discussions",
+    "Contributes to discussions?",
+    "Contributes to discussions",
+  ],
+  "beha-eu-note": [
+    "Maintain better notes",
+    "Maintains a detailed note?",
+    "Maintains a detailed note",
+  ],
+  "beha-eu-coll": [
+    "Talk to classmates",
+    "Works collaboratively?",
+    "Works collaboratively",
+  ],
+  "beha-eu-tech": [
+    "Don't be distracted by devices",
+    "Uses technology appropriately?",
+    "Uses technology appropriately",
+  ],
+  "beha-md-home": [
+    "Complete homework",
+    "Completes all homework?",
+    "Completes all homework",
+  ],
+  "pers-xx-resp": [
+    "Talk less in class",
+    "Respectful and quiet?",
+    "Respectful and quiet",
+  ],
+  "pers-xx-posi": [
+    "Stay positive while studying",
+    "Shows positive attitude?",
+    "Shows positive attitude",
+  ],
+  "pers-po-punc": [
+    "Come to class on time",
+    "Comes to class on time?",
+    "Comes to class on time",
+  ],
+  "pers-po-equi": [
+    "Bring equipments more often",
+    "Brings equipments?",
+    "Brings equipments",
+  ],
+  "pers-po-catc": [
+    "Catch up on the missed work",
+    "Catches up on missed work?",
+    "Catches up on missed work",
+  ],
+  "pers-eu-pace": [
+    "Work faster",
+    "Works at a reasonable pace?",
+    "Works at a reasonable pace",
+  ],
+  "pers-eu-askq": [
+    "Ask teacher for help",
+    "Asks help in class?",
+    "Asks help in class",
+  ],
+  "pers-eu-hpot": [
+    "Help other students",
+    "Helps others in class?",
+    "Helps others in class",
+  ],
+  "pers-ia-appl": [
+    "Stay committed to studies",
+    "Applies themself?",
+    "Applies themself",
+  ],
+  "pers-ia-askh": [
+    "Attend Maths Tutorials",
+    "Seeks help outside class?",
+    "Seeks help outside class",
+  ],
+  "pers-ia-resi": ["Show resilience", "Shows resilience?", "Shows resilience"],
 } as const;
+
+export type Trait = keyof typeof traitsList;
+
+/* topics and skills are not set by button inputs */
+const topicTraits = ["acad-xx-topi", "acad-xx-skil"];
+export const togglableTraitsList = Object.fromEntries(
+  Object.entries(traitsList).filter(([key, _val]) => !topicTraits.includes(key))
+);
 
 /* single comment */
 export type Comment = {
@@ -66,11 +209,11 @@ export type Comment = {
   text: string;
   tone: keyof typeof tonesList;
   type: keyof typeof typesList;
-  trait?: keyof typeof traitsList;
+  trait?: Trait;
 };
 
 export type CommentsCount = {
-  [trait in keyof typeof traitsList]: number;
+  [trait in Trait]: number;
 };
 
 /* decorators for the comment */

@@ -2,12 +2,14 @@ import React from "react";
 
 interface TraitButtonProps extends React.ComponentPropsWithoutRef<"label"> {
   input: React.ReactElement;
+  containerProps?: React.ComponentPropsWithoutRef<"div">;
 }
 
 export default function TraitButton({
   children,
   input,
   className,
+  containerProps,
   ...otherProps
 }: TraitButtonProps) {
   const disabled = input.props?.disabled;
@@ -20,7 +22,7 @@ export default function TraitButton({
     className: "hidden",
   };
   return (
-    <div>
+    <div {...containerProps}>
       {React.cloneElement(input, inputProps)}
       <label {...labelProps}>{children}</label>
     </div>

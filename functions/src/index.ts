@@ -4,17 +4,26 @@ import admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
 
-function countByField(
-  snapshot: admin.firestore.QuerySnapshot<admin.firestore.DocumentData>,
-  field: string
+function countByTrait(
+  snapshot: admin.firestore.QuerySnapshot<admin.firestore.DocumentData>
 ) {
-  const counts: { [fieldName: string]: number } = {};
+  const counts: {
+    [fieldName: string]: { "+"?: number; "-"?: number };
+  } = {};
   snapshot.docs.map((doc) => {
-    const fieldName = doc.get(field);
+    const fieldName = doc.get("trait");
+    const tone = doc.get("tone") as "+" | "-";
+
     if (fieldName in counts) {
-      counts[fieldName] += 1;
+      if (tone in counts[fieldName]) {
+        counts[fieldName][tone]! += 1;
+      } else {
+        counts[fieldName][tone] = 1;
+      }
     } else {
-      counts[fieldName] = 1;
+      counts[fieldName] = {
+        [tone]: 1,
+      };
     }
   });
   return counts;
@@ -27,14 +36,19 @@ export const setCountComments = functions
     // count all comments
     const query = db.collection("comments");
     const snapshot = await query.get();
-    const counts = countByField(snapshot, "trait");
+    const counts = countByTrait(snapshot);
     functions.logger.info(counts);
 
     // write counts to the firestore
     const batch = db.batch();
     const countCollection = db.collection("comments-count");
-    Object.entries(counts).forEach(([id, count]) => {
-      batch.set(countCollection.doc(id), { count: count }, { merge: true });
+    Object.entries(counts).forEach(([trait, count]) => {
+      const total = (count["+"] || 0) + (count["-"] || 0);
+      batch.set(
+        countCollection.doc(trait),
+        { trait: trait, total: total },
+        { merge: true }
+      );
     });
     await batch.commit();
 

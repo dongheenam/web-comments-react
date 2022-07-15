@@ -27,7 +27,7 @@
   }
   .btn-label:not(.disabled),
   input:indeterminate + .btn-tri:not(.disabled) {
-    @apply hover:bg-primary-100 dark:hover:bg-primary-900/md;
+    @apply hover:bg-gray-200 dark:hover:bg-gray-800;
   }
   input:checked + .btn-label,
   input:checked + .btn-tri {
