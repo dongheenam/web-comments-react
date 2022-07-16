@@ -58,3 +58,11 @@ export function choice<T>(array: Array<T>, n: number = 1): Array<T> {
 export function isString(input: any): boolean {
   return typeof input === "string" || input instanceof String;
 }
+
+export function sum(array: Array<number>): number {
+  return array.reduce((p, c) => p + c);
+}
+
+export function round(num: number, precision: number = 0): number {
+  return Math.round((num + Number.EPSILON) * 10 ** precision) / 10 ** precision;
+}

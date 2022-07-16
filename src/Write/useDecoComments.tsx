@@ -26,10 +26,7 @@ export default function useDecoComments({
 
   /* limit the number of comments to show */
   function limitComment(comments: Array<Comment>): Array<Comment> {
-    if (comments.length < 13) {
-      return comments;
-    }
-
+    // sorting the comments by trait and tone
     const positiveCommentsByTrait: {
       [trait in Trait]?: Array<Comment>;
     } = {};
@@ -49,22 +46,24 @@ export default function useDecoComments({
           : negativeCommentsByTrait;
 
       if (trait in commentsListBucket) {
-        commentsListBucket[trait]!.push(comment);
+        commentsListBucket[trait]!.push(comment); // stupid TypeScript
       } else {
         commentsListBucket[trait] = [comment];
       }
     });
 
-    const positiveCommentsPool = Object.values(positiveCommentsByTrait)
-      .map((comments) => choice(comments, 2))
-      .flat(1);
-    const negativeCommentsPool = Object.values(negativeCommentsByTrait)
-      .map((comments) => choice(comments, 2))
-      .flat(1);
+    // choose one comment per trait
+    const positiveCommentsPool = Object.values(positiveCommentsByTrait).map(
+      (comments) => choice(comments)[0]
+    );
+    const negativeCommentsPool = Object.values(negativeCommentsByTrait).map(
+      (comments) => choice(comments)[0]
+    );
 
+    // choose 6 comments per tone
     return [
-      ...(choice(positiveCommentsPool, 6) as Array<Comment>),
-      ...(choice(negativeCommentsPool, 6) as Array<Comment>),
+      ...choice(positiveCommentsPool, 6),
+      ...choice(negativeCommentsPool, 6),
     ];
   }
 
@@ -79,7 +78,7 @@ export default function useDecoComments({
   }
 
   /* populate the topics and skills */
-  function topicSkillComment(commentText: string) {
+  function topicifyComment(commentText: string) {
     let newText = commentText;
 
     // chooses a random topic or skill with matching status and return its name
@@ -124,13 +123,21 @@ export default function useDecoComments({
     return newText;
   }
 
+  /* add the strength of the comment (not implemented yet) */
+  function strengthifyComment(commentText: string) {
+    return commentText
+      .replace(/<strength>/, "excellent")
+      .replace(/<frequency>/, "always");
+  }
+
   useEffect(() => {
     const limitedComments = limitComment(fetchedComments);
     setDecoratedComments(
       limitedComments
         .map((comment) => `${comment.tone} ${comment.text}`)
         .map((text) => genderComment(text))
-        .map((text) => topicSkillComment(text))
+        .map((text) => topicifyComment(text))
+        .map((text) => strengthifyComment(text))
     );
   }, [gender, fetchedComments]);
 

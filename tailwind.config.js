@@ -47,6 +47,7 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
     // require("./src/styles/custom-plugin"),
   ],
   darkMode: "class",

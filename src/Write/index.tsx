@@ -6,7 +6,7 @@
 
 import { useState } from "react";
 import Explanation from "../components/Explanation";
-import type { Gender, Comment } from "../Comments";
+import type { Comment } from "../Comments";
 import ChooseTraits from "./ChooseTraits";
 import AdjustComments from "./AdjustComments";
 import ShowResults from "./ShowResults";
@@ -15,20 +15,19 @@ import useTopicSkills from "./useTopicSkills";
 import useFetchComments from "./useFetchComments";
 import useTraits from "./useTraits";
 import useDecoComments from "./useDecoComments";
-
-export type CommentsState = {
-  commentList: Array<Comment>;
-  fetchComments: () => Promise<void>;
-};
+import useEffortGrades from "./useEffortGrades";
 
 export default function Write() {
   /* for debugging */
-  const [appStatus, setAppStatus] = useState<string>();
+  const [appStatus, setAppStatus] = useState<string>("awaiting submission...");
 
   /* states */
   const genderState = useGender();
   const topicSkillState = useTopicSkills();
   const traitsState = useTraits();
+  const effortGradeState = useEffortGrades({
+    traitsStatus: traitsState.traitsStatus,
+  });
   const commentsState = useFetchComments({
     setAppStatus: setAppStatus,
     topics: topicSkillState.topics,
@@ -45,7 +44,7 @@ export default function Write() {
   /* render JSX */
   return (
     <>
-      <h1>Comment maker</h1>
+      <h2>Comment maker</h2>
       <ChooseTraits
         genderState={genderState}
         topicSkillState={topicSkillState}
@@ -54,12 +53,20 @@ export default function Write() {
       />
       <hr />
 
-      <ShowResults decoCommentsState={decoCommentsState} />
-
-      <details className="mt-8">
+      <ShowResults
+        decoCommentsState={decoCommentsState}
+        effortGradeState={effortGradeState}
+        setAppStatus={setAppStatus}
+        clearingFunctions={{
+          clearGender: genderState.clearGender,
+          clearTraits: traitsState.clearTraits,
+          clearTopicSkills: topicSkillState.clearTopicSkills,
+        }}
+      />
+      <Explanation className="mt-2">Status: {appStatus}</Explanation>
+      <details className="mt-4">
         <summary className="text-base text-gray-500">Show geeky stuff</summary>
         <div className="grid grid-flow-row">
-          <Explanation>Status: {appStatus}</Explanation>
           <Explanation>Gender: {genderState.gender}</Explanation>
           <Explanation>
             Topics: {JSON.stringify(topicSkillState.topics)}
@@ -69,6 +76,9 @@ export default function Write() {
           </Explanation>
           <Explanation>
             Traits: {JSON.stringify(traitsState.traitsStatus)}
+          </Explanation>
+          <Explanation>
+            Efforts: {JSON.stringify(effortGradeState.effortGrades)}
           </Explanation>
           <Explanation>
             Comments: {JSON.stringify(commentsState.fetchedComments)}

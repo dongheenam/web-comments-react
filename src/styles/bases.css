@@ -9,10 +9,16 @@
     @apply text-4xl font-bold mb-8;
   }
   h2 {
-    @apply text-3xl font-bold mt-8 mb-4;
+    @apply text-4xl font-bold mb-6;
+  }
+  h2:not(:first-of-type) {
+    @apply mt-12;
   }
   h3 {
-    @apply text-2xl font-bold my-4;
+    @apply text-3xl font-semibold mt-4 mb-6;
+  }
+  h3:not(:first-of-type) {
+    @apply mt-12;
   }
   p {
     @apply mb-8;
@@ -27,7 +33,23 @@
     background: theme(colors.gray.950);
   }
   /* other components */
+  ul {
+    @apply list-disc list-inside mb-8;
+  }
+  ul ul {
+    @apply list-[circle] ml-8;
+  }
   hr {
     @apply my-4 border-gray-400 dark:border-gray-700;
+  }
+  img {
+    @apply w-full mx-auto my-8 border-2 border-gray-800 dark:border-gray-300 dark:opacity-md;
+  }
+  strong {
+    @apply font-semibold;
+  }
+  th,
+  td {
+    @apply px-4 py-2 border-2 border-collapse border-gray-400 dark:border-gray-600 min-w-[3.5em];
   }
 }

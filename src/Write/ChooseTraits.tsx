@@ -115,7 +115,7 @@ export default function ChooseTraits({
                 value={skills[idx].name}
                 onChange={handleTopicSkillNameChange}
                 placeholder={
-                  idx === 0 ? "starts with a verb (adding fractions, ...)" : ""
+                  idx === 0 ? "starts with a verb (add fractions, ...)" : ""
                 }
               />
               <TraitButton

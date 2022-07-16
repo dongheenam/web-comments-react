@@ -8,7 +8,7 @@ export default function Admin() {
   const [user, signIn, signOut] = useAuth();
   return (
     <>
-      <h1>Admin</h1>
+      <h2>Admin</h2>
       {user ? (
         <>
           <p>

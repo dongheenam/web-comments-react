@@ -1,4 +1,11 @@
 @layer components {
+  /* text decorators */
+  .blue {
+    @apply text-primary-600 dark:text-primary-300;
+  }
+  .red {
+    @apply text-red-500 dark:text-red-300;
+  }
   /* buttons */
   .btn,
   .btn-icon,
@@ -50,10 +57,11 @@
   }
 
   /* text inputs */
-  .input-text {
-    @apply bg-white/low dark:bg-gray-700/low text-inherit rounded-md
-      focus:outline-primary-500 dark:focus:outline-primary-300
-      focus:ring-transparent focus:ring-offset-transparent;
+  .input-text,
+  .textarea {
+    @apply bg-white/md dark:bg-black/low text-inherit rounded-md
+      focus:ring-primary-500 dark:focus:ring-primary-300
+      focus:border-primary-500 dark:focus:border-primary-300;
   }
 
   /* checkboxes and radios */

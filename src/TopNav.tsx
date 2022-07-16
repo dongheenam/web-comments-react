@@ -16,7 +16,8 @@ export default function TopNav({ mode, toggleMode }: TopNavProps) {
       bg-gray-800 font-semibold
       flex flex-row items-center"
     >
-      <div className="text-2xl">Web Comment Generator v2</div>
+      <div className="text-2xl hidden md:block">Web Comment Generator v2</div>
+      <div className="text-xl md:hidden">Comment Generator</div>
       <div className="flex-grow"></div>
       <Button as={Link} to="/" className={buttonClassName}>
         Home

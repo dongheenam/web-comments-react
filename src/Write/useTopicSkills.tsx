@@ -11,19 +11,24 @@ export interface UseTopicSkills {
   handleTopicSkillStatusChange: (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => void;
+  clearTopicSkills: () => void;
 }
 
 export default function useTopicSkills(): UseTopicSkills {
   /* topics and skills input */
-  const initialTopicSkill: TopicSkill = { name: "", status: 1 };
-  const [topics, setTopics] = useState<Array<TopicSkill>>([
-    { ...initialTopicSkill },
-    { ...initialTopicSkill },
-  ]);
-  const [skills, setSkills] = useState<Array<TopicSkill>>([
-    { ...initialTopicSkill },
-    { ...initialTopicSkill },
-  ]);
+  const initialTopicSkills = [
+    { name: "", status: 1 },
+    { name: "", status: 1 },
+  ];
+  const [topics, setTopics] = useState<Array<TopicSkill>>(initialTopicSkills);
+  const [skills, setSkills] = useState<Array<TopicSkill>>(initialTopicSkills);
+
+  // reset
+  function clearTopicSkills() {
+    setTopics(initialTopicSkills);
+    setSkills(initialTopicSkills);
+  }
+
   // name changes
   function handleTopicSkillNameChange({
     target,
@@ -45,6 +50,7 @@ export default function useTopicSkills(): UseTopicSkills {
     };
     setList(newList);
   }
+
   // tone changes
   function handleTopicSkillStatusChange(
     event: React.SyntheticEvent<HTMLInputElement>
@@ -73,5 +79,6 @@ export default function useTopicSkills(): UseTopicSkills {
     skills,
     handleTopicSkillNameChange,
     handleTopicSkillStatusChange,
+    clearTopicSkills,
   };
 }

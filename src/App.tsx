@@ -20,7 +20,7 @@ export default function App() {
       <BrowserRouter>
         <TopNav mode={mode} toggleMode={toggleMode} />
         <main
-          className="w-[min(95%,1200px)] p-8 overflow-x-hidden overflow-y-scroll
+          className="w-[min(95%,1000px)] p-8 overflow-x-hidden overflow-y-scroll
           flex-grow bg-gray-100 dark:bg-gray-900 flex flex-col"
         >
           <div className="flex-grow">

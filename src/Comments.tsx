@@ -2,13 +2,10 @@ import { Outlet } from "react-router-dom";
 import FirebaseProvider from "./firebase";
 
 /* effort grades */
-export interface Effort {
-  po?: 1 | 2 | 3 | 4 | 5;
-  eu?: 1 | 2 | 3 | 4 | 5;
-  ia?: 1 | 2 | 3 | 4 | 5;
-  md?: 1 | 2 | 3 | 4 | 5;
-  ap?: 1 | 2 | 3 | 4 | 5;
-}
+export const effortStrands = ["po", "eu", "ia", "md"] as const;
+export type EffortGrades = {
+  [strand in typeof effortStrands[number]]: number;
+};
 
 /* description of traits */
 export const tonesList = {
@@ -102,11 +99,11 @@ export const traitsList = {
     "Prepares for assessments?",
     "Prepares for assessments",
   ],
-  "asse-md-plan": [
-    "Make plans for assessments",
-    "Plans for assessments?",
-    "Plans for assessments",
-  ],
+  // "asse-md-plan": [
+  //   "Make plans for assessments",
+  //   "Plans for assessments?",
+  //   "Plans for assessments",
+  // ],
   "beha-eu-clti": [
     "Be productive in class",
     "Uses class time effectively?",
