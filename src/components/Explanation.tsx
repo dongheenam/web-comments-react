@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 
 export default function Explanation({
@@ -6,7 +7,7 @@ export default function Explanation({
   ...otherProps
 }: React.ComponentPropsWithoutRef<"div">) {
   return (
-    <div className={`text-base text-gray-500 ${className}`} {...otherProps}>
+    <div className={`explanation ${className}`} {...otherProps}>
       {children}
     </div>
   );

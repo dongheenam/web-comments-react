@@ -46,7 +46,7 @@ export const setCountComments = functions
       const total = (count["+"] || 0) + (count["-"] || 0);
       batch.set(
         countCollection.doc(trait),
-        { trait: trait, total: total },
+        { trait: trait, total: total, ...count },
         { merge: true }
       );
     });

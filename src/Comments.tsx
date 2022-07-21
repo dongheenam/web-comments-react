@@ -17,6 +17,7 @@ export const typesList = {
   asse: "assessment",
   beha: "behaviour",
   pers: "personality",
+  othe: "other",
 } as const;
 export const traitsList = {
   "acad-xx-topi": [
@@ -189,13 +190,22 @@ export const traitsList = {
     "Seeks help outside class?",
     "Seeks help outside class",
   ],
-  "pers-ia-resi": ["Show resilience", "Shows resilience?", "Shows resilience"],
+  "pers-ia-resi": [
+    "Show more resilience",
+    "Shows resilience?",
+    "Shows resilience",
+  ],
+  "othe-xx-undi": [
+    "Undefined trait with status 0",
+    "Undefined trait with status 1",
+    "Undefined trait with status 2",
+  ],
 } as const;
 
 export type Trait = keyof typeof traitsList;
 
 /* topics and skills are not set by button inputs */
-const topicTraits = ["acad-xx-topi", "acad-xx-skil"];
+const topicTraits = ["acad-xx-topi", "acad-xx-skil", "othe-xx-undi"];
 export const togglableTraitsList = Object.fromEntries(
   Object.entries(traitsList).filter(([key, _val]) => !topicTraits.includes(key))
 );
@@ -204,9 +214,9 @@ export const togglableTraitsList = Object.fromEntries(
 export type Comment = {
   id: string;
   text: string;
-  tone: keyof typeof tonesList;
+  tone: keyof typeof tonesList | "";
   type: keyof typeof typesList;
-  trait?: Trait;
+  trait: Trait;
 };
 
 export type CommentsCount = {

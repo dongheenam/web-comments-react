@@ -17,9 +17,7 @@ export default function TextInput({
   return (
     <>
       <label htmlFor={id}>
-        <span className="text-base text-gray-600 dark:text-gray-300">
-          {label}
-        </span>
+        <span className="explanation">{label}</span>
         <input {...textInputProps} />
       </label>
     </>

@@ -26,7 +26,11 @@ export default function CheckCount() {
 
   return (
     <>
-      <h2>Check comment counts</h2>
+      <h3>Check comment counts</h3>
+      <p>
+        Clicking the button will update the count of comments on the server.
+        Useful for checking any outdated traits.
+      </p>
       <Button
         variant="outline"
         color="primary"

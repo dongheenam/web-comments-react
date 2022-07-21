@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import type { EffortGrades } from "../Comments";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { round, sum } from "../util";
 
@@ -33,7 +32,6 @@ export default function ShowResults({
   const [roundEG, setRoundEG] = useState<boolean>(true);
 
   /* copy the comments */
-  const taRef = useRef(null);
   function copyComments() {
     navigator.clipboard
       .writeText(commentsShown)
@@ -123,7 +121,6 @@ export default function ShowResults({
 
       <h3>Generated comments</h3>
       <textarea
-        ref={taRef}
         className="textarea w-full text-lg overflow-x-hidden"
         placeholder="comments will be populated here..."
         rows={decoratedComments.length * 1.125 || 2.25}

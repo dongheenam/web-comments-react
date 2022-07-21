@@ -1,14 +1,14 @@
+import useAuth from "./useAuth";
 import Button from "../components/Button";
 import Explanation from "../components/Explanation";
 import CheckCount from "./CheckCount";
-import UploadComment from "./UploadComment";
-import useAuth from "./useAuth";
+import EditDatabase from "./EditDatabase";
 
 export default function Admin() {
   const [user, signIn, signOut] = useAuth();
   return (
     <>
-      <h2>Admin</h2>
+      <h2>Admin Tools</h2>
       {user ? (
         <>
           <p>
@@ -16,8 +16,8 @@ export default function Admin() {
             admin account.
           </p>
           <CheckCount />
-          <UploadComment />
-          <h2>Sign out</h2>
+          <EditDatabase />
+          <h3>Sign out</h3>
           <Button color="red" variant="outline" onClick={() => signOut()}>
             Sign out
           </Button>
