@@ -11,15 +11,15 @@ export default defineConfig({
       treeshake: "recommended",
       output: {
         compact: true,
-        manualChunks(id) {
-          if (id.includes("firebase")) {
-            // chunk firebase modules seperately
-            return "firebase";
-          } else if (id.includes("react")) {
-            // chunk the rest of the modules and internal source together
-            return "react";
-          }
-        },
+        // manualChunks(id) {
+        //   if (id.includes("firebase")) {
+        //     // chunk firebase modules seperately
+        //     return "firebase";
+        //   } else if (id.includes("react")) {
+        //     // chunk the rest of the modules and internal source together
+        //     return "react";
+        //   }
+        // },
       },
     },
   },

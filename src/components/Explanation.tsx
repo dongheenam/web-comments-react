@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
-export default function Explanation({
+export function Explanation({
   children,
   className,
   ...otherProps

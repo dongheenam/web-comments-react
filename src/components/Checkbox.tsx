@@ -1,6 +1,6 @@
 type CheckboxProps = React.ComponentPropsWithoutRef<"input">;
 
-export default function Checkbox({
+export function Checkbox({
   className = "",
   disabled = false,
   ...otherProps

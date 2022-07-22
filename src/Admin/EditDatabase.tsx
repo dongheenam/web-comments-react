@@ -1,50 +1,46 @@
 import { useState } from "react";
-import { Trait } from "../Comments";
-import Button from "../components/Button";
-import Explanation from "../components/Explanation";
+import { Trait, Comment } from "../Comments";
+import { Explanation } from "../components";
+import { useFirebase } from "../firebase";
 import EditComment from "./EditComment";
+import SelectComment from "./SelectComment";
 import SelectTrait from "./SelectTrait";
+import SendComment from "./SendComment";
+
+/* placeholder comment */
+export const emptyComment = {
+  id: "",
+  text: "(create an empty comment)",
+  tone: "",
+  type: "othe",
+  trait: "othe-xx-undi",
+} as Comment;
 
 export default function EditDatabase() {
   const [traitToEdit, setTraitToEdit] = useState<Trait>("othe-xx-undi");
+  const [commentToEdit, setCommentToEdit] = useState<Comment>(emptyComment);
   const [appStatus, setAppStatus] = useState<string>("awating input...");
-  const [mode, setMode] = useState<"edit-trait" | "edit-comment">(
-    "edit-comment"
-  );
+
+  const db = useFirebase().db;
 
   return (
     <>
-      <h3>Edit database</h3>
-      <SelectTrait
-        traitToEdit={traitToEdit}
-        setTraitToEdit={setTraitToEdit}
-        setAppStatus={setAppStatus}
+      <h2>Edit database</h2>
+      <p>
+        Modifying or deleting existing comments: select a trait then a comment,
+        and edit the comment.
+        <br />
+        Creating a new comment: select a trait and go straight to the editor
+        section.
+      </p>
+      <SelectTrait {...{ db, traitToEdit, setTraitToEdit, setAppStatus }} />
+      <SelectComment {...{ db, traitToEdit, setCommentToEdit, setAppStatus }} />
+      <EditComment
+        {...{ commentToEdit, setCommentToEdit, appStatus, setAppStatus }}
       />
-      <div className="mt-4 ml-[5em] pl-4 flex gap-2">
-        <Button
-          variant={mode === "edit-comment" ? "solid" : "outline"}
-          onClick={() => setMode("edit-comment")}
-        >
-          Edit comments
-        </Button>
-        <Button
-          variant={mode === "edit-trait" ? "solid" : "outline"}
-          onClick={() => setMode("edit-trait")}
-        >
-          Edit trait
-        </Button>
-      </div>
-      <hr />
+      <SendComment {...{ db, commentToEdit, appStatus, setAppStatus }} />
 
-      {mode === "edit-comment" ? (
-        <EditComment traitToEdit={traitToEdit} setAppStatus={setAppStatus} />
-      ) : (
-        <span>Trait edit</span>
-      )}
-
-      <div className="ml-[5em] pl-4">
-        <Explanation>Status: {appStatus}</Explanation>
-      </div>
+      <Explanation>Status: {appStatus}</Explanation>
     </>
   );
 }

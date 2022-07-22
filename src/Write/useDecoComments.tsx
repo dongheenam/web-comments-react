@@ -13,8 +13,16 @@ interface UseDecoCommentsProps {
 }
 
 export interface UseDecoComments {
+  sortedComments: SortedComments;
+  setChosenComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   decoratedComments: Array<string>;
 }
+
+export type SortedComments = {
+  [tone in "+" | "-"]: {
+    [trait in Trait]?: Array<Comment>;
+  };
+};
 
 export default function useDecoComments({
   gender,
@@ -22,50 +30,47 @@ export default function useDecoComments({
   skills,
   fetchedComments,
 }: UseDecoCommentsProps): UseDecoComments {
-  const [decoratedComments, setDecoratedComments] = useState<Array<string>>([]);
-
-  /* limit the number of comments to show */
-  function limitComment(comments: Array<Comment>): Array<Comment> {
-    // sorting the comments by trait and tone
-    const positiveCommentsByTrait: {
-      [trait in Trait]?: Array<Comment>;
-    } = {};
-    const negativeCommentsByTrait: {
-      [trait in Trait]?: Array<Comment>;
-    } = {};
+  // sort the comments by trait and tone
+  const defaultSorted: SortedComments = { "+": {}, "-": {} };
+  const [sortedComments, setSortedComments] =
+    useState<SortedComments>(defaultSorted);
+  function sortComments(comments: Array<Comment>): SortedComments {
+    const sortedComments = { ...defaultSorted };
 
     comments.map((comment) => {
       const trait = comment.trait;
-      if (!trait) {
+      const tone = comment.tone;
+      if (!trait || !tone) {
         return;
       }
 
-      const commentsListBucket =
-        comment.tone === "+"
-          ? positiveCommentsByTrait
-          : negativeCommentsByTrait;
-
-      if (trait in commentsListBucket) {
-        commentsListBucket[trait]!.push(comment); // stupid TypeScript
+      if (trait in sortedComments[tone]) {
+        sortedComments[tone][trait]?.push(comment);
       } else {
-        commentsListBucket[trait] = [comment];
+        sortedComments[tone][trait] = [comment];
       }
     });
 
-    // choose one comment per trait
-    const positiveCommentsPool = Object.values(positiveCommentsByTrait).map(
+    return sortedComments;
+  }
+  useEffect(() => {
+    setSortedComments(sortComments(fetchedComments));
+  }, [fetchedComments]);
+
+  // comments chosen automatically or by user
+  const [chosenComments, setChosenComments] = useState<Array<Comment>>([]);
+  useEffect(() => {
+    if (!sortedComments) return;
+
+    const positivePool = Object.values(sortedComments["+"]).map(
       (comments) => choice(comments)[0]
     );
-    const negativeCommentsPool = Object.values(negativeCommentsByTrait).map(
+    const negativePool = Object.values(sortedComments["-"]).map(
       (comments) => choice(comments)[0]
     );
 
-    // choose 6 comments per tone
-    return [
-      ...choice(positiveCommentsPool, 6),
-      ...choice(negativeCommentsPool, 6),
-    ];
-  }
+    setChosenComments([...choice(positivePool, 6), ...choice(negativePool, 6)]);
+  }, [sortedComments]);
 
   /* populate the pronouns */
   function genderComment(commentText: string) {
@@ -95,11 +100,11 @@ export default function useDecoComments({
 
     // regular expressions
     const pTopicReg = /(^\+.*)<topic>/;
-    const nTopicReg = /(^\-.*)<topic>/;
+    const nTopicReg = /(^-.*)<topic>/;
     const pSkillReg = /(^\+.*)<skill>/;
-    const nSkillReg = /(^\-.*)<skill>/;
+    const nSkillReg = /(^-.*)<skill>/;
     const pSkillingReg = /(^\+.*)<skill-ing>/;
-    const nSkillingReg = /(^\-.*)<skill-ing>/;
+    const nSkillingReg = /(^-.*)<skill-ing>/;
 
     if (pTopicReg.test(newText)) {
       newText = newText.replace(pTopicReg, replaceWith(topics, 2));
@@ -130,16 +135,17 @@ export default function useDecoComments({
       .replace(/<frequency>/, "always");
   }
 
+  const [decoratedComments, setDecoratedComments] = useState<Array<string>>([]);
   useEffect(() => {
-    const limitedComments = limitComment(fetchedComments);
+    if (!chosenComments) return;
     setDecoratedComments(
-      limitedComments
+      chosenComments
         .map((comment) => `${comment.tone} ${comment.text}`)
         .map((text) => genderComment(text))
         .map((text) => topicifyComment(text))
         .map((text) => strengthifyComment(text))
     );
-  }, [gender, fetchedComments]);
+  }, [gender, chosenComments]);
 
-  return { decoratedComments };
+  return { sortedComments, setChosenComments, decoratedComments };
 }

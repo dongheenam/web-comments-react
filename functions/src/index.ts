@@ -16,6 +16,8 @@ function countByTrait(
 
     if (fieldName in counts) {
       if (tone in counts[fieldName]) {
+        // stupid TypeScript
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         counts[fieldName][tone]! += 1;
       } else {
         counts[fieldName][tone] = 1;
@@ -30,7 +32,7 @@ function countByTrait(
 }
 
 /* https://medium.com/firebase-tips-tricks/how-to-count-documents-in-firestore-a0527f792d04 */
-export const setCountComments = functions
+const setCountComments = functions
   .region("australia-southeast1")
   .https.onCall(async (_data, _context) => {
     // count all comments
@@ -56,3 +58,19 @@ export const setCountComments = functions
     // return counts back to the app
     return counts;
   });
+
+const isUserAdmin = functions
+  .region("australia-southeast1")
+  .https.onCall(async (_data, context) => {
+    if (!context.auth) {
+      return { admin: false };
+    }
+
+    const userRef = await db.collection("users").doc(context.auth.uid).get();
+    if (!userRef) {
+      return { admin: false };
+    }
+    return { admin: userRef.get("admin") };
+  });
+
+module.exports = { setCountComments, isUserAdmin };

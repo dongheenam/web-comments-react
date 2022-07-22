@@ -5,7 +5,7 @@ interface TraitButtonProps extends React.ComponentPropsWithoutRef<"label"> {
   containerProps?: React.ComponentPropsWithoutRef<"div">;
 }
 
-export default function TraitButton({
+export function TraitButton({
   children,
   input,
   className,

@@ -12,7 +12,7 @@ export type ButtonProps<C extends React.ElementType> = {
   children: string | React.ReactElement;
 } & React.ComponentPropsWithoutRef<C>;
 
-export default function Button<C extends React.ElementType>({
+export function Button<C extends React.ElementType>({
   as,
   variant = "text",
   color = "default",

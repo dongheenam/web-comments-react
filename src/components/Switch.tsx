@@ -4,7 +4,7 @@ interface SwitchProps extends React.ComponentPropsWithoutRef<"input"> {
   containerProps?: React.ComponentPropsWithoutRef<"div">;
 }
 
-export default function Switch({
+export function Switch({
   className = "",
   disabled = false,
   containerProps,

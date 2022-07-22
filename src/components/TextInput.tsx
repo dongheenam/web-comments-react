@@ -2,7 +2,7 @@ interface TextInputProps extends React.ComponentPropsWithoutRef<"input"> {
   label?: string;
 }
 
-export default function TextInput({
+export function TextInput({
   label,
   id,
   className,

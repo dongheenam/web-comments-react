@@ -5,7 +5,7 @@ interface AProps extends React.ComponentPropsWithoutRef<"a"> {
   className?: string;
 }
 
-export default function A({
+export function A({
   children,
   href,
   blank = false,
