@@ -12,10 +12,12 @@ export default function Admin() {
         <>
           <p>
             <span>
-              Current user: {user.email}, id: {user.uid}
+              Current user: {user.email}
               <br />
             </span>
-            {isAdmin ? (
+            {isAdmin === undefined ? (
+              <span>Checking login status...</span>
+            ) : isAdmin === true ? (
               <span>You are logged in as an admin account.</span>
             ) : (
               <span>You are not an admin!</span>

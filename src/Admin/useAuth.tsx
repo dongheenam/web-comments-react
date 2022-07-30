@@ -11,11 +11,11 @@ import type { User } from "firebase/auth";
 import { useFirebase } from "../firebase";
 import { getFunctions, httpsCallable } from "firebase/functions";
 
-type UseAuth = [User | undefined, boolean, () => void, () => void];
+type UseAuth = [User | undefined, boolean | undefined, () => void, () => void];
 
 export default function useAuth(): UseAuth {
   const [user, setUser] = useState<User>();
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>();
 
   const functions = getFunctions(useFirebase().app, "australia-southeast1");
 
@@ -50,6 +50,7 @@ export default function useAuth(): UseAuth {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        setIsAdmin(undefined);
         checkAdmin().then((value) => setIsAdmin(value));
       } else {
         setUser(undefined);

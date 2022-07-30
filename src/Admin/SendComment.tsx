@@ -65,7 +65,7 @@ export default function SendComment({
   async function deleteComment() {
     try {
       await deleteDoc(doc(db, "comments", commentToEdit.id));
-      setAppStatus(appStatus + "deletion success!");
+      setAppStatus(appStatus + "deletion success! ");
     } catch (error) {
       setAppStatus(appStatus + `deletion failed: ${error}`);
     }
@@ -115,7 +115,7 @@ export default function SendComment({
           className="mb-4"
           onClick={() => {
             if (commentToEdit.id === "") {
-              setAppStatus("you cannot delete an empty comment!");
+              setAppStatus("you cannot delete an empty comment! ");
               return;
             }
             setAppStatus("deleting comment... ");

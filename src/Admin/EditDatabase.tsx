@@ -19,7 +19,7 @@ export const emptyComment = {
 export default function EditDatabase() {
   const [traitToEdit, setTraitToEdit] = useState<Trait>("othe-xx-undi");
   const [commentToEdit, setCommentToEdit] = useState<Comment>(emptyComment);
-  const [appStatus, setAppStatus] = useState<string>("awating input...");
+  const [appStatus, setAppStatus] = useState<string>("awating input... ");
 
   const db = useFirebase().db;
 

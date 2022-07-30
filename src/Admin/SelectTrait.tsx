@@ -31,7 +31,7 @@ export default function SelectTrait({
     fetchTraitsFromCounts()
       .then((traits) => {
         setTraitsFetched(traits);
-        setAppStatus("loaded traits from server! Ready to begin...");
+        setAppStatus("loaded traits from server! Ready to begin... ");
       })
       .catch((error) => console.error(error));
   }, []);

@@ -59,6 +59,7 @@ const setCountComments = functions
     return counts;
   });
 
+// check if the user is registered as an admin
 const isUserAdmin = functions
   .region("australia-southeast1")
   .https.onCall(async (_data, context) => {
@@ -73,4 +74,24 @@ const isUserAdmin = functions
     return { admin: userRef.get("admin") };
   });
 
-module.exports = { setCountComments, isUserAdmin };
+// register the user's ID on Firestore when they first log on
+const registerUser = functions
+  .region("australia-southeast1")
+  .auth.user()
+  .onCreate((user) => {
+    const uid = user.uid;
+
+    db.collection("users")
+      .doc(uid)
+      .set({
+        admin: false,
+      })
+      .then(() => {
+        functions.logger.info(`user with uid: ${uid} added on database!`);
+      })
+      .catch((e) => {
+        functions.logger.error(e);
+      });
+  });
+
+module.exports = { setCountComments, isUserAdmin, registerUser };

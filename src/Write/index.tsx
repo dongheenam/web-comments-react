@@ -1,8 +1,3 @@
-/*
- * IDEAS:
- *   - putting a button next to each generated comment to change its "strength"
- */
-
 import { useState } from "react";
 import { Explanation } from "../components";
 import ChooseTraits from "./SelectTraits";

@@ -12,9 +12,6 @@ function parseText(commentText: string): string {
       .replace(/\b(his)\b(?!$)/, "<possessive>")
       .replace(/\b(him)\b(?!$)/, "<object>")
       .replace(/\b(he|she)\b(?!$)/, "<subject>")
-      // other descriptors
-      .replace(/\b(excellent|great|strong|good|sound)\b(?!$)/, "<strength>")
-      .replace(/\b(always|usually|sometimes)\b(?!$)/, "<frequency>")
   );
 }
 
@@ -51,7 +48,7 @@ export default function EditComment({
         [name]: value,
       } as React.ComponentState)
     );
-    setAppStatus("comments edited!");
+    setAppStatus("comments edited! ");
   }
   // automatically parse texts
   useEffect(() => {
@@ -128,7 +125,7 @@ export default function EditComment({
           />
           <Explanation>
             {"Placeholders: <topic> <skill(-ing)> <assessment> " +
-              "<subject> <object> <possessive> <reflexive>"}
+              "<subject> <object> <possessive> <reflexive> [synonym|synonym]"}
           </Explanation>
         </div>
       </div>
