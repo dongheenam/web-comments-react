@@ -43,7 +43,7 @@ export default function ChooseTraits({
     justify-items-stretch items-start"
       >
         <span className="self-center">Gender</span>
-        <div className="flex gap-2 text-base flex-wrap">
+        <div className="flex gap-2 flex-wrap">
           {["male", "female", "other"].map((item) => (
             <LabelButton
               key={`gender-${item}`}

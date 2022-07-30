@@ -22,7 +22,7 @@ export default function Admin() {
             Sign out
           </Button>
           <Explanation className="overflow-hidden break-all mt-4">
-            Current user: {JSON.stringify({ email: user.email, uid: user.uid })}
+            Current user: {user.email}
           </Explanation>
         </>
       ) : (
