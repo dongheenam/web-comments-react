@@ -1,5 +1,5 @@
 import React from "react";
-import Button, { ButtonProps } from "./Button";
+import { Button, ButtonProps } from ".";
 
 type ButtonIconProps<C extends React.ElementType> = Omit<
   ButtonProps<C>,
@@ -9,7 +9,7 @@ type ButtonIconProps<C extends React.ElementType> = Omit<
   "aria-label": string;
 } & React.ComponentPropsWithoutRef<C>;
 
-export default function IconButton<C extends React.ElementType>({
+export function IconButton<C extends React.ElementType>({
   icon,
   className = "p-2 px-2 font-semibold rounded-md border border-transparent",
   ...otherProps

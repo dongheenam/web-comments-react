@@ -1,29 +1,35 @@
-import Button from "../components/Button";
-import Explanation from "../components/Explanation";
-import CheckCount from "./CheckCount";
-import UploadComment from "./UploadComment";
 import useAuth from "./useAuth";
+import { Button } from "../components";
+import CheckCount from "./CheckCount";
+import EditDatabase from "./EditDatabase";
 
 export default function Admin() {
-  const [user, signIn, signOut] = useAuth();
+  const [user, isAdmin, signIn, signOut] = useAuth();
   return (
     <>
-      <h2>Admin</h2>
+      <h1>Admin Tools</h1>
       {user ? (
         <>
           <p>
-            Note: you can only send the request if you are registered as an
-            admin account.
+            <span>
+              Current user: {user.email}, id: {user.uid}
+              <br />
+            </span>
+            {isAdmin ? (
+              <span>You are logged in as an admin account.</span>
+            ) : (
+              <span>You are not an admin!</span>
+            )}
           </p>
-          <CheckCount />
-          <UploadComment />
-          <h2>Sign out</h2>
           <Button color="red" variant="outline" onClick={() => signOut()}>
             Sign out
           </Button>
-          <Explanation className="overflow-hidden break-all mt-4">
-            Current user: {user.email}
-          </Explanation>
+          <section>
+            <CheckCount />
+          </section>
+          <section>
+            <EditDatabase />
+          </section>
         </>
       ) : (
         <div>

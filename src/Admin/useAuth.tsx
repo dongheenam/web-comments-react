@@ -9,11 +9,15 @@ import {
 } from "firebase/auth";
 import type { User } from "firebase/auth";
 import { useFirebase } from "../firebase";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
-type UseAuth = [User | undefined, () => void, () => void];
+type UseAuth = [User | undefined, boolean, () => void, () => void];
 
 export default function useAuth(): UseAuth {
   const [user, setUser] = useState<User>();
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  const functions = getFunctions(useFirebase().app, "australia-southeast1");
 
   const app = useFirebase().app;
   const provider = new GoogleAuthProvider();
@@ -36,15 +40,22 @@ export default function useAuth(): UseAuth {
     }
   }
 
+  async function checkAdmin() {
+    const isUserAdmin = httpsCallable(functions, "isUserAdmin");
+    const response = (await isUserAdmin()) as { data: { admin: boolean } };
+    return response.data.admin;
+  }
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        checkAdmin().then((value) => setIsAdmin(value));
       } else {
         setUser(undefined);
       }
     });
   }, [auth]);
 
-  return [user, signIn, signOut];
+  return [user, isAdmin, signIn, signOut];
 }

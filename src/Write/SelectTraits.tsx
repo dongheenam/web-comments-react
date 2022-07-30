@@ -1,11 +1,13 @@
 import { togglableTraitsList } from "../Comments";
-import Button from "../components/Button";
-import Explanation from "../components/Explanation";
-import LabelButton from "../components/LabelButton";
-import Radio from "../components/Radio";
-import TextInput from "../components/TextInput";
-import TraitButton from "../components/TraitButton";
-import TraitCheckbox from "../components/TraitCheckbox";
+import {
+  Button,
+  Explanation,
+  LabelButton,
+  Radio,
+  TextInput,
+  TraitButton,
+  TraitCheckbox,
+} from "../components";
 
 import type { UseFetchComments } from "./useFetchComments";
 import type { UseGender } from "./useGender";
@@ -19,7 +21,7 @@ interface OptionsProps {
   commentsState: UseFetchComments;
 }
 
-export default function ChooseTraits({
+export default function SelectTraits({
   genderState,
   topicSkillState,
   traitsState,
@@ -37,7 +39,7 @@ export default function ChooseTraits({
 
   return (
     <>
-      <h3>Choose Traits</h3>
+      <h2>Trait selection</h2>
       <div
         className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-4
     justify-items-stretch items-start"

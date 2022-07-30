@@ -2,7 +2,7 @@ interface TextInputProps extends React.ComponentPropsWithoutRef<"input"> {
   label?: string;
 }
 
-export default function TextInput({
+export function TextInput({
   label,
   id,
   className,
@@ -17,9 +17,7 @@ export default function TextInput({
   return (
     <>
       <label htmlFor={id}>
-        <span className="text-base text-gray-600 dark:text-gray-300">
-          {label}
-        </span>
+        <span className="explanation">{label}</span>
         <input {...textInputProps} />
       </label>
     </>

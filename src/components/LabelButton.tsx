@@ -5,7 +5,7 @@ export interface LabelButtonProps
   input: React.ReactElement;
 }
 
-export default function LabelButton({
+export function LabelButton({
   children,
   input,
   className,

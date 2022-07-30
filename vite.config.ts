@@ -8,7 +8,19 @@ export default defineConfig({
   build: {
     // https://rollupjs.org/guide/en/#big-list-of-options
     rollupOptions: {
-      output: {},
+      treeshake: "recommended",
+      output: {
+        compact: true,
+        // manualChunks(id) {
+        //   if (id.includes("firebase")) {
+        //     // chunk firebase modules seperately
+        //     return "firebase";
+        //   } else if (id.includes("react")) {
+        //     // chunk the rest of the modules and internal source together
+        //     return "react";
+        //   }
+        // },
+      },
     },
   },
 });

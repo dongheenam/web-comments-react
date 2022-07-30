@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import type { EffortGrades } from "../Comments";
-import Button from "../components/Button";
+import { useEffect, useState } from "react";
+import { Button } from "../components";
 import { round, sum } from "../util";
+import AdjustComments from "./AdjustComments";
 
 import { UseDecoComments } from "./useDecoComments";
 import { UseEffortGrades } from "./useEffortGrades";
@@ -23,17 +23,18 @@ export default function ShowResults({
   setAppStatus,
   clearingFunctions,
 }: ResultsProps) {
-  const { decoratedComments } = decoCommentsState;
+  const { sortedComments, setChosenComments, decoratedComments } =
+    decoCommentsState;
   const { effortGrades } = effortGradeState;
   const { clearGender, clearTraits, clearTopicSkills } = clearingFunctions;
   const [commentsShown, setCommentsShown] = useState<string>("");
   const [effortValues, setEffortValues] = useState<Array<number>>([
     3, 3, 3, 3, 60,
   ]);
-  const [roundEG, setRoundEG] = useState<boolean>(true);
+  const [roundEffort, setRoundEffort] = useState<boolean>(true);
+  const [adjust] = useState<boolean>(false);
 
   /* copy the comments */
-  const taRef = useRef(null);
   function copyComments() {
     navigator.clipboard
       .writeText(commentsShown)
@@ -64,13 +65,13 @@ export default function ShowResults({
     }
     const roundedEffortGrades = Object.entries(effortGrades).map(
       // round to the nearest integer if asked to round
-      ([_strand, value]) => round(value, roundEG ? 0 : 1)
+      ([_strand, value]) => round(value, roundEffort ? 0 : 1)
     );
     // append the averages
     roundedEffortGrades.push(sum(roundedEffortGrades) * 5);
 
     setEffortValues(roundedEffortGrades);
-  }, [roundEG, effortGrades]);
+  }, [roundEffort, effortGrades]);
 
   /* copy the effort grades */
   function copyEfforts() {
@@ -85,55 +86,73 @@ export default function ShowResults({
 
   return (
     <>
+      <h2>Results</h2>
       <h3>Effort grades</h3>
-      <table className="bg-transparent">
-        <thead>
-          <tr>
-            <th>Strand</th>
-            <th>PO</th>
-            <th>EU</th>
-            <th>IA</th>
-            <th>MD</th>
-            <th>Effort%</th>
-          </tr>
-        </thead>
-        <tbody className="text-right">
-          <tr>
-            <td className="text-left font-bold">Grade</td>
-            <td>{effortValues[0]}</td>
-            <td>{effortValues[1]}</td>
-            <td>{effortValues[2]}</td>
-            <td>{effortValues[3]}</td>
-            <td>{effortValues[4]}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div className="mt-4 flex flex-row gap-2">
-        <Button
-          variant={roundEG ? "solid" : "outline"}
-          onClick={() => setRoundEG(!roundEG)}
-        >
-          Round grades
-        </Button>
-        <Button variant="solid" color="primary" onClick={() => copyEfforts()}>
-          Copy
-        </Button>
+      <div className="ml-8">
+        <div className="my-4 flex flex-row gap-2">
+          <Button
+            variant={roundEffort ? "solid" : "outline"}
+            onClick={() => setRoundEffort(!roundEffort)}
+          >
+            Round grades
+          </Button>
+          <Button variant="solid" color="primary" onClick={() => copyEfforts()}>
+            Copy
+          </Button>
+        </div>
+        <table className="bg-transparent">
+          <thead>
+            <tr>
+              <th>Strand</th>
+              <th>PO</th>
+              <th>EU</th>
+              <th>IA</th>
+              <th>MD</th>
+              <th>Effort%</th>
+            </tr>
+          </thead>
+          <tbody className="text-right">
+            <tr>
+              <td className="text-left font-bold">Grade</td>
+              <td>{effortValues[0]}</td>
+              <td>{effortValues[1]}</td>
+              <td>{effortValues[2]}</td>
+              <td>{effortValues[3]}</td>
+              <td>{effortValues[4]}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <h3>Generated comments</h3>
-      <textarea
-        ref={taRef}
-        className="textarea w-full text-lg overflow-x-hidden"
-        placeholder="comments will be populated here..."
-        rows={decoratedComments.length * 1.125 || 2.25}
-        value={commentsShown}
-        onChange={(e) => setCommentsShown(e.target.value)}
-      />
-      <div className="mt-4 flex gap-2">
-        <Button variant="solid" color="primary" onClick={() => copyComments()}>
-          Copy
-        </Button>
+      <h3>Comments</h3>
+      <div className="ml-8">
+        <div className="mb-4 flex flex-row gap-2">
+          <Button
+            variant={adjust ? "solid" : "outline"}
+            color="default"
+            disabled
+            // onClick={() => setAdjust(!adjust)}
+          >
+            Adjust
+          </Button>
+          <Button
+            variant="solid"
+            color="primary"
+            onClick={() => copyComments()}
+          >
+            Copy
+          </Button>
+        </div>
+        <textarea
+          className="textarea w-full text-lg overflow-x-hidden"
+          placeholder="comments will be populated here..."
+          rows={decoratedComments.length * 1.125 || 2.25}
+          value={commentsShown}
+          onChange={(e) => setCommentsShown(e.target.value)}
+        />
+        {adjust && (
+          <AdjustComments {...{ sortedComments, setChosenComments }} />
+        )}
       </div>
     </>
   );

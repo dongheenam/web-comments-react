@@ -1,11 +1,6 @@
-export interface RadioProps {
-  className?: string;
-  disabled?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  [otherProps: string]: any;
-}
+export type RadioProps = React.ComponentPropsWithoutRef<"input">;
 
-export default function Radio({
+export function Radio({
   className = "",
   disabled = false,
   onChange,

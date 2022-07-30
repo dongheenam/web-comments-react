@@ -1,14 +1,11 @@
 /*
  * IDEAS:
  *   - putting a button next to each generated comment to change its "strength"
- *   - calculating effort grade using the traits and strength
  */
 
 import { useState } from "react";
-import Explanation from "../components/Explanation";
-import type { Comment } from "../Comments";
-import ChooseTraits from "./ChooseTraits";
-import AdjustComments from "./AdjustComments";
+import { Explanation } from "../components";
+import ChooseTraits from "./SelectTraits";
 import ShowResults from "./ShowResults";
 import useGender from "./useGender";
 import useTopicSkills from "./useTopicSkills";
@@ -44,47 +41,57 @@ export default function Write() {
   /* render JSX */
   return (
     <>
-      <h2>Comment maker</h2>
-      <ChooseTraits
-        genderState={genderState}
-        topicSkillState={topicSkillState}
-        traitsState={traitsState}
-        commentsState={commentsState}
-      />
-      <hr />
-
-      <ShowResults
-        decoCommentsState={decoCommentsState}
-        effortGradeState={effortGradeState}
-        setAppStatus={setAppStatus}
-        clearingFunctions={{
-          clearGender: genderState.clearGender,
-          clearTraits: traitsState.clearTraits,
-          clearTopicSkills: topicSkillState.clearTopicSkills,
-        }}
-      />
-      <Explanation className="mt-2">Status: {appStatus}</Explanation>
-      <details className="mt-4">
-        <summary className="text-base text-gray-500">Show geeky stuff</summary>
-        <div className="grid grid-flow-row">
-          <Explanation>Gender: {genderState.gender}</Explanation>
-          <Explanation>
-            Topics: {JSON.stringify(topicSkillState.topics)}
-          </Explanation>
-          <Explanation>
-            Skills: {JSON.stringify(topicSkillState.skills)}
-          </Explanation>
-          <Explanation>
-            Traits: {JSON.stringify(traitsState.traitsStatus)}
-          </Explanation>
-          <Explanation>
-            Efforts: {JSON.stringify(effortGradeState.effortGrades)}
-          </Explanation>
-          <Explanation>
-            Comments: {JSON.stringify(commentsState.fetchedComments)}
-          </Explanation>
-        </div>
-      </details>
+      <h1>Comments Generator</h1>
+      <section>
+        <ChooseTraits
+          genderState={genderState}
+          topicSkillState={topicSkillState}
+          traitsState={traitsState}
+          commentsState={commentsState}
+        />
+      </section>
+      <section>
+        <ShowResults
+          decoCommentsState={decoCommentsState}
+          effortGradeState={effortGradeState}
+          setAppStatus={setAppStatus}
+          clearingFunctions={{
+            clearGender: genderState.clearGender,
+            clearTraits: traitsState.clearTraits,
+            clearTopicSkills: topicSkillState.clearTopicSkills,
+          }}
+        />
+      </section>
+      <section>
+        <Explanation>Status: {appStatus}</Explanation>
+        <details>
+          <summary className="text-base text-gray-500">
+            Show geeky stuff
+          </summary>
+          <div className="grid grid-flow-row">
+            <Explanation>Gender: {genderState.gender}</Explanation>
+            <Explanation>
+              Topics: {JSON.stringify(topicSkillState.topics)}
+            </Explanation>
+            <Explanation>
+              Skills: {JSON.stringify(topicSkillState.skills)}
+            </Explanation>
+            <Explanation>
+              Traits: {JSON.stringify(traitsState.traitsStatus)}
+            </Explanation>
+            <Explanation>
+              Efforts: {JSON.stringify(effortGradeState.effortGrades)}
+            </Explanation>
+            <Explanation>
+              Comments downloaded: {commentsState.fetchedComments.length}
+            </Explanation>
+            <Explanation>
+              Comments selected:{" "}
+              {JSON.stringify(decoCommentsState.decoratedComments)}
+            </Explanation>
+          </div>
+        </details>
+      </section>
     </>
   );
 }

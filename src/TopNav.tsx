@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { VscColorMode } from "react-icons/vsc";
-import Button from "./components/Button";
-import IconButton from "./components/IconButton";
+import { Button, IconButton } from "./components";
 
 interface TopNavProps {
   mode: string;

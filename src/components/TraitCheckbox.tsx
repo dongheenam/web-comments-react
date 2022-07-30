@@ -4,10 +4,7 @@ interface TraitCheckboxProps extends React.ComponentPropsWithoutRef<"input"> {
   status: number;
 }
 
-export default function TraitCheckbox({
-  status,
-  ...otherProps
-}: TraitCheckboxProps) {
+export function TraitCheckbox({ status, ...otherProps }: TraitCheckboxProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {

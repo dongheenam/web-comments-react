@@ -4,7 +4,7 @@ export interface LabelProps extends React.ComponentPropsWithoutRef<"label"> {
   input: React.ReactElement;
 }
 
-export default function Label({
+export function Label({
   children,
   input,
   className,

@@ -2,8 +2,7 @@ import { useState } from "react";
 import { getFunctions, httpsCallable } from "firebase/functions";
 
 import type { CommentsCount } from "../Comments";
-import Button from "../components/Button";
-import Explanation from "../components/Explanation";
+import { Button, Explanation } from "../components";
 import { useFirebase } from "../firebase";
 
 export default function CheckCount() {
@@ -26,7 +25,11 @@ export default function CheckCount() {
 
   return (
     <>
-      <h2>Check comment counts</h2>
+      <h2>Update comment counts</h2>
+      <p>
+        Clicking the button will update the count of comments on the server.
+        Useful for looking for outdated traits.
+      </p>
       <Button
         variant="outline"
         color="primary"
