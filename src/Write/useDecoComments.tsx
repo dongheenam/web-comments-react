@@ -14,6 +14,7 @@ interface UseDecoCommentsProps {
 
 export interface UseDecoComments {
   sortedComments: SortedComments;
+  chosenComments: Comment[];
   setChosenComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   decoratedComments: Array<string>;
 }
@@ -98,7 +99,7 @@ export default function useDecoComments({
       return phrase.replace(/^(\$1\w+)\b(.*)/, "$1-ing$2");
     }
 
-    // regular expressions
+    // regular expressions for topic and skills
     const pTopicReg = /(^\+.*)<topic>/;
     const nTopicReg = /(^-.*)<topic>/;
     const pSkillReg = /(^\+.*)<skill>/;
@@ -135,6 +136,20 @@ export default function useDecoComments({
       .replace(/<frequency>/, "always");
   }
 
+  // choose from the list of synonyms
+  function chooseSynonyms(commentText: string) {
+    // synonyms are served as "[phrase 1|phrase 2|...]"
+    const synReg = /\[.+?\]/g;
+    let newText = commentText;
+
+    for (let match of newText.matchAll(synReg)) {
+      const synonyms = match[0].slice(1, -1).split("|");
+      newText = newText.replace(match[0], choice(synonyms)[0]);
+    }
+
+    return newText;
+  }
+
   const [decoratedComments, setDecoratedComments] = useState<Array<string>>([]);
   useEffect(() => {
     if (!chosenComments) return;
@@ -143,9 +158,14 @@ export default function useDecoComments({
         .map((comment) => `${comment.tone} ${comment.text}`)
         .map((text) => genderComment(text))
         .map((text) => topicifyComment(text))
-        .map((text) => strengthifyComment(text))
+        .map((text) => chooseSynonyms(text))
     );
   }, [gender, chosenComments]);
 
-  return { sortedComments, setChosenComments, decoratedComments };
+  return {
+    sortedComments,
+    chosenComments,
+    setChosenComments,
+    decoratedComments,
+  };
 }

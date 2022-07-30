@@ -35,11 +35,6 @@ export const traitsList = {
     "Solves word problems?",
     "Solves word problems",
   ],
-  "acad-ia-addi": [
-    "Try optional work",
-    "Completes optional work?",
-    "Completes optional work",
-  ],
   "acad-ia-enri": [
     "Try enrichment tasks",
     "Works on enrichment tasks?",
@@ -100,11 +95,6 @@ export const traitsList = {
     "Prepares for assessments?",
     "Prepares for assessments",
   ],
-  // "asse-md-plan": [
-  //   "Make plans for assessments",
-  //   "Plans for assessments?",
-  //   "Plans for assessments",
-  // ],
   "beha-eu-clti": [
     "Be productive in class",
     "Uses class time effectively?",

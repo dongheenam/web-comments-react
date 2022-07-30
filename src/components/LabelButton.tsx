@@ -21,7 +21,7 @@ export function LabelButton({
     className: "hidden",
   };
   return (
-    <div>
+    <div className="align-middle">
       {React.cloneElement(input, inputProps)}
       <label {...labelProps}>{children}</label>
     </div>

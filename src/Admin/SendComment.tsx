@@ -82,7 +82,11 @@ export default function SendComment({
         <Explanation>[Type] {typesList[commentToEdit.type]}</Explanation>
         <Explanation className="truncate">
           [Trait]{" "}
-          {`${commentToEdit.trait}: ${traitsList[commentToEdit.trait][1]}`}
+          {`${commentToEdit.trait}: ${
+            commentToEdit.trait in traitsList
+              ? traitsList[commentToEdit.trait][1]
+              : "EXPIRED TRAIT"
+          }`}
         </Explanation>
         <Explanation>
           [Tone]{" "}

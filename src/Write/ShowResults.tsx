@@ -23,8 +23,12 @@ export default function ShowResults({
   setAppStatus,
   clearingFunctions,
 }: ResultsProps) {
-  const { sortedComments, setChosenComments, decoratedComments } =
-    decoCommentsState;
+  const {
+    sortedComments,
+    chosenComments,
+    setChosenComments,
+    decoratedComments,
+  } = decoCommentsState;
   const { effortGrades } = effortGradeState;
   const { clearGender, clearTraits, clearTopicSkills } = clearingFunctions;
   const [commentsShown, setCommentsShown] = useState<string>("");
@@ -32,7 +36,7 @@ export default function ShowResults({
     3, 3, 3, 3, 60,
   ]);
   const [roundEffort, setRoundEffort] = useState<boolean>(true);
-  const [adjust] = useState<boolean>(false);
+  const [adjust, setAdjust] = useState<boolean>(false);
 
   /* copy the comments */
   function copyComments() {
@@ -55,7 +59,7 @@ export default function ShowResults({
 
   /* populate the textarea */
   useEffect(() => {
-    setCommentsShown(decoratedComments.join("\n"));
+    setCommentsShown(decoratedComments.sort().join("\n"));
   }, [decoratedComments]);
 
   /* round the effort grades */
@@ -130,8 +134,7 @@ export default function ShowResults({
           <Button
             variant={adjust ? "solid" : "outline"}
             color="default"
-            disabled
-            // onClick={() => setAdjust(!adjust)}
+            onClick={() => setAdjust(!adjust)}
           >
             Adjust
           </Button>
@@ -151,7 +154,9 @@ export default function ShowResults({
           onChange={(e) => setCommentsShown(e.target.value)}
         />
         {adjust && (
-          <AdjustComments {...{ sortedComments, setChosenComments }} />
+          <AdjustComments
+            {...{ sortedComments, chosenComments, setChosenComments }}
+          />
         )}
       </div>
     </>

@@ -19,24 +19,23 @@ export default function App() {
     >
       <BrowserRouter>
         <TopNav mode={mode} toggleMode={toggleMode} />
-        <main
-          className="w-[min(95%,1000px)] p-8 overflow-x-hidden overflow-y-scroll
-          flex-grow bg-gray-100 dark:bg-gray-900 flex flex-col"
-        >
-          <div className="flex-grow">
-            <Suspense fallback={<span>Loading...</span>}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/comments" element={<Comments />}>
-                  <Route path="write" element={<Write />} />
-                  <Route path="admin" element={<Admin />} />
-                </Route>
-                <Route path="*" element={<Home />} />
-              </Routes>
-            </Suspense>
-          </div>
-          <Footer />
-        </main>
+        <div className="w-screen overflow-x-hidden overflow-y-scroll bg-gray-100 dark:bg-gray-900">
+          <main className="w-[min(95%,1000px)] p-8 m-auto flex-grow flex flex-col">
+            <div className="flex-grow">
+              <Suspense fallback={<span>Loading...</span>}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/comments" element={<Comments />}>
+                    <Route path="write" element={<Write />} />
+                    <Route path="admin" element={<Admin />} />
+                  </Route>
+                  <Route path="*" element={<Home />} />
+                </Routes>
+              </Suspense>
+            </div>
+            <Footer />
+          </main>
+        </div>
       </BrowserRouter>
     </div>
   );
