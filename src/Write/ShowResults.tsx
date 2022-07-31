@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import { EffortGrades } from "../Comments";
 import { Button } from "../components";
 import { round, sum } from "../util";
 import AdjustComments from "./AdjustComments";
 
-import { UseDecoComments } from "./useDecoComments";
+import { UseChooseComments } from "./useChooseComments";
 import { UseEffortGrades } from "./useEffortGrades";
 
 interface ResultsProps {
-  decoCommentsState: UseDecoComments;
+  decoCommentsState: UseChooseComments;
   effortGradeState: UseEffortGrades;
   setAppStatus: (appStatus: string) => void;
   clearingFunctions: {
@@ -32,9 +33,6 @@ export default function ShowResults({
   const { effortGrades } = effortGradeState;
   const { clearGender, clearTraits, clearTopicSkills } = clearingFunctions;
   const [commentsShown, setCommentsShown] = useState<string>("");
-  const [effortValues, setEffortValues] = useState<Array<number>>([
-    3, 3, 3, 3, 60,
-  ]);
   const [roundEffort, setRoundEffort] = useState<boolean>(true);
   const [adjust, setAdjust] = useState<boolean>(false);
 
@@ -62,24 +60,20 @@ export default function ShowResults({
     setCommentsShown(decoratedComments.sort().join("\n"));
   }, [decoratedComments]);
 
-  /* round the effort grades */
-  useEffect(() => {
-    if (!effortGrades) {
-      return;
-    }
-    const roundedEffortGrades = Object.entries(effortGrades).map(
-      // round to the nearest integer if asked to round
-      ([_strand, value]) => round(value, roundEffort ? 0 : 1)
-    );
-    // append the averages
-    roundedEffortGrades.push(sum(roundedEffortGrades) * 5);
+  /* round the effort grades for display */
+  function roundEG(effortGrades: EffortGrades | undefined) {
+    if (!effortGrades) return [, , , ,];
 
-    setEffortValues(roundedEffortGrades);
-  }, [roundEffort, effortGrades]);
+    const rounded = Object.values(effortGrades).map((value) =>
+      round(value, roundEffort ? 0 : 1)
+    );
+    rounded.push(sum(rounded) * 5);
+    return rounded;
+  }
 
   /* copy the effort grades */
   function copyEfforts() {
-    const effortValuesText = effortValues.slice(0, -1).join("\t");
+    const effortValuesText = roundEG(effortGrades).slice(0, -1).join("\t");
     navigator.clipboard
       .writeText(effortValuesText)
       .then(() => alert("Effort grades are copied! Paste them in Excel."))
@@ -107,22 +101,17 @@ export default function ShowResults({
         <table className="bg-transparent">
           <thead>
             <tr>
-              <th>Strand</th>
-              <th>PO</th>
-              <th>EU</th>
-              <th>IA</th>
-              <th>MD</th>
-              <th>Effort%</th>
+              {["Strand", "PO", "EU", "IA", "MD", "Effort%"].map((title) => (
+                <th>{title}</th>
+              ))}
             </tr>
           </thead>
           <tbody className="text-right">
             <tr>
               <td className="text-left font-bold">Grade</td>
-              <td>{effortValues[0]}</td>
-              <td>{effortValues[1]}</td>
-              <td>{effortValues[2]}</td>
-              <td>{effortValues[3]}</td>
-              <td>{effortValues[4]}</td>
+              {roundEG(effortGrades).map((item) => (
+                <td>{item}</td>
+              ))}
             </tr>
           </tbody>
         </table>

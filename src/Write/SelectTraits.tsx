@@ -140,115 +140,40 @@ export default function SelectTraits({
 
         <span>Traits</span>
         <div className="flex flex-col">
-          <Explanation>Punctuality and Organisation</Explanation>
-          <div className="mb-4 grid grid-cols-3 gap-2 justify-items-stretch text-base">
-            {Object.entries(togglableTraitsList)
-              .filter(([key, _labels]) => key.slice(5, 7) === "po")
-              .map(([key, labels]) => (
-                <TraitButton
-                  key={key}
-                  className="w-full text-center truncate"
-                  input={
-                    <TraitCheckbox
-                      id={key}
-                      name="trait"
-                      status={traitsStatus[key as keyof TraitsStatus]}
-                      onClick={handleTraitsChange}
-                    />
-                  }
-                >
-                  {labels[traitsStatus[key as keyof TraitsStatus]]}
-                </TraitButton>
-              ))}
-          </div>
-          <Explanation>Effective Use of Class Time and Technology</Explanation>
-          <div className="mb-4 grid grid-cols-3 gap-2 justify-items-stretch text-base">
-            {Object.entries(togglableTraitsList)
-              .filter(([key, _labels]) => key.slice(5, 7) === "eu")
-              .map(([key, labels]) => (
-                <TraitButton
-                  key={key}
-                  containerProps={{ className: "hover:min-w-min hover:z-10" }}
-                  className="w-full text-center truncate"
-                  input={
-                    <TraitCheckbox
-                      id={key}
-                      name="trait"
-                      status={traitsStatus[key as keyof TraitsStatus]}
-                      onClick={handleTraitsChange}
-                    />
-                  }
-                >
-                  {labels[traitsStatus[key as keyof TraitsStatus]]}
-                </TraitButton>
-              ))}
-          </div>
-          <Explanation>Independent Approach to Learning</Explanation>
-          <div className="mb-4 grid grid-cols-3 gap-2 justify-items-stretch text-base">
-            {Object.entries(togglableTraitsList)
-              .filter(([key, _labels]) => key.slice(5, 7) === "ia")
-              .map(([key, labels]) => (
-                <TraitButton
-                  key={key}
-                  containerProps={{ className: "hover:min-w-min hover:z-10" }}
-                  className="w-full text-center truncate"
-                  input={
-                    <TraitCheckbox
-                      id={key}
-                      name="trait"
-                      status={traitsStatus[key as keyof TraitsStatus]}
-                      onClick={handleTraitsChange}
-                    />
-                  }
-                >
-                  {labels[traitsStatus[key as keyof TraitsStatus]]}
-                </TraitButton>
-              ))}
-          </div>
-          <Explanation>Meeting Deadlines</Explanation>
-          <div className="mb-4 grid grid-cols-3 gap-2 justify-items-stretch text-base">
-            {Object.entries(togglableTraitsList)
-              .filter(([key, _labels]) => key.slice(5, 7) === "md")
-              .map(([key, labels]) => (
-                <TraitButton
-                  key={key}
-                  containerProps={{ className: "hover:min-w-min hover:z-10" }}
-                  className="w-full text-center truncate"
-                  input={
-                    <TraitCheckbox
-                      id={key}
-                      name="trait"
-                      status={traitsStatus[key as keyof TraitsStatus]}
-                      onClick={handleTraitsChange}
-                    />
-                  }
-                >
-                  {labels[traitsStatus[key as keyof TraitsStatus]]}
-                </TraitButton>
-              ))}
-          </div>
-          <Explanation>Others</Explanation>
-          <div className="grid grid-cols-3 gap-2 justify-items-stretch text-base">
-            {Object.entries(togglableTraitsList)
-              .filter(([key, _labels]) => key.slice(5, 7) === "xx")
-              .map(([key, labels]) => (
-                <TraitButton
-                  key={key}
-                  containerProps={{ className: "hover:min-w-min hover:z-10" }}
-                  className="w-full text-center truncate"
-                  input={
-                    <TraitCheckbox
-                      id={key}
-                      name="trait"
-                      status={traitsStatus[key as keyof TraitsStatus]}
-                      onClick={handleTraitsChange}
-                    />
-                  }
-                >
-                  {labels[traitsStatus[key as keyof TraitsStatus]]}
-                </TraitButton>
-              ))}
-          </div>
+          {[
+            { title: "Punctuality and Organisation", code: "po" },
+            { title: "Effective Use of Class Time and Technology", code: "eu" },
+            { title: "Independent Approach to Learning", code: "ia" },
+            { title: "Meeting Deadlines", code: "md" },
+            { title: "Others", code: "xx" },
+          ].map(({ title, code }) => (
+            <>
+              <Explanation>{title}</Explanation>
+              <div className="mb-4 grid grid-cols-3 gap-2 justify-items-stretch text-base">
+                {Object.entries(togglableTraitsList)
+                  .filter(([key, _labels]) => key.slice(5, 7) === code)
+                  .map(([key, labels]) => (
+                    <TraitButton
+                      key={key}
+                      containerProps={{
+                        className: "hover:min-w-min hover:z-10",
+                      }}
+                      className="w-full text-center truncate"
+                      input={
+                        <TraitCheckbox
+                          id={key}
+                          name="trait"
+                          status={traitsStatus[key as keyof TraitsStatus]}
+                          onClick={handleTraitsChange}
+                        />
+                      }
+                    >
+                      {labels[traitsStatus[key as keyof TraitsStatus]]}
+                    </TraitButton>
+                  ))}
+              </div>
+            </>
+          ))}
         </div>
         <span></span>
         <div>

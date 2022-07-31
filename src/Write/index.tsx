@@ -6,7 +6,7 @@ import useGender from "./useGender";
 import useTopicSkills from "./useTopicSkills";
 import useFetchComments from "./useFetchComments";
 import useTraits from "./useTraits";
-import useDecoComments from "./useDecoComments";
+import useChooseComments from "./useChooseComments";
 import useEffortGrades from "./useEffortGrades";
 
 export default function Write() {
@@ -26,7 +26,7 @@ export default function Write() {
     skills: topicSkillState.skills,
     traitsStatus: traitsState.traitsStatus,
   });
-  const decoCommentsState = useDecoComments({
+  const decoCommentsState = useChooseComments({
     gender: genderState.gender,
     topics: topicSkillState.topics,
     skills: topicSkillState.skills,

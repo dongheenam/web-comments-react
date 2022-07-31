@@ -125,7 +125,7 @@ export default function EditComment({
           />
           <Explanation>
             {"Placeholders: <topic> <skill(-ing)> <assessment> " +
-              "<subject> <object> <possessive> <reflexive> [synonym|synonym]"}
+              "<subject> <object> <possessive> <reflexive> [synonym 1|synonym 2|...]"}
           </Explanation>
         </div>
       </div>

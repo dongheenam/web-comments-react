@@ -39,7 +39,7 @@ export default function useEffortGrades({ traitsStatus }: EffortGradeProps) {
     return grade;
   }
 
-  // automatically calculate the effort grades based on the traits
+  // update effort grades based on the traits
   useEffect(() => {
     const newEffortGrades = Object.fromEntries(
       effortStrands.map((strand) => [strand, gradeOfStrand(strand)])

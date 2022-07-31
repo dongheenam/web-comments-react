@@ -45,18 +45,17 @@ export default function useFetchComments({
     negativeTraits = choice(negativeTraits, 8);
 
     // add topics and skills
-    // prepend the trait so that they appear first in the list
     if (topics.some((topic) => topic.status === 2)) {
-      positiveTraits.unshift("acad-xx-topi");
+      positiveTraits.push("acad-xx-topi");
     }
     if (topics.some((topic) => topic.status === 0)) {
-      negativeTraits.unshift("acad-xx-topi");
+      negativeTraits.push("acad-xx-topi");
     }
     if (skills.some((skill) => skill.status === 2)) {
-      positiveTraits.unshift("acad-xx-skil");
+      positiveTraits.push("acad-xx-skil");
     }
     if (skills.some((skill) => skill.status === 0)) {
-      negativeTraits.unshift("acad-xx-skil");
+      negativeTraits.push("acad-xx-skil");
     }
 
     if (positiveTraits.length + negativeTraits.length === 0) {
