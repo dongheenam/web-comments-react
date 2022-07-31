@@ -55,10 +55,16 @@ export default function AdjustComments({
           className="select w-full rounded-md truncate"
           name={`${trait}-text`}
           key={`${trait}-text`}
-          value={chosenComments.filter((c) => c.trait === trait)[0]?.id}
+          value={
+            chosenComments.filter(
+              (c) => c.trait === trait && c.tone === tone
+            )[0]?.id
+          }
           onChange={(e) =>
             setChosenComments([
-              ...chosenComments.filter((c) => c.trait !== trait),
+              ...chosenComments.filter(
+                (c) => c.trait !== trait || c.tone !== tone
+              ),
               sortedComments[tone][trait]!.filter(
                 (c) => c.id === e.target.value
               )[0],

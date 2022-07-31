@@ -8,7 +8,7 @@ import { UseChooseComments } from "./useChooseComments";
 import { UseEffortGrades } from "./useEffortGrades";
 
 interface ResultsProps {
-  decoCommentsState: UseChooseComments;
+  chooseCommentsState: UseChooseComments;
   effortGradeState: UseEffortGrades;
   setAppStatus: (appStatus: string) => void;
   clearingFunctions: {
@@ -19,7 +19,7 @@ interface ResultsProps {
 }
 
 export default function ShowResults({
-  decoCommentsState,
+  chooseCommentsState,
   effortGradeState,
   setAppStatus,
   clearingFunctions,
@@ -28,8 +28,8 @@ export default function ShowResults({
     sortedComments,
     chosenComments,
     setChosenComments,
-    decoratedComments,
-  } = decoCommentsState;
+    commentTextsList,
+  } = chooseCommentsState;
   const { effortGrades } = effortGradeState;
   const { clearGender, clearTraits, clearTopicSkills } = clearingFunctions;
   const [commentsShown, setCommentsShown] = useState<string>("");
@@ -57,8 +57,8 @@ export default function ShowResults({
 
   /* populate the textarea */
   useEffect(() => {
-    setCommentsShown(decoratedComments.sort().join("\n"));
-  }, [decoratedComments]);
+    setCommentsShown(commentTextsList.sort().join("\n"));
+  }, [commentTextsList]);
 
   /* round the effort grades for display */
   function roundEG(effortGrades: EffortGrades | undefined) {
@@ -138,7 +138,7 @@ export default function ShowResults({
         <textarea
           className="textarea w-full text-lg overflow-x-hidden"
           placeholder="comments will be populated here..."
-          rows={decoratedComments.length * 1.125 || 2.25}
+          rows={commentTextsList.length * 1.125 || 2.25}
           value={commentsShown}
           onChange={(e) => setCommentsShown(e.target.value)}
         />

@@ -1,10 +1,5 @@
 import { A } from "./components";
 
-import traitsIMG from "./images/traits.png";
-import write1IMG from "./images/write1.png";
-import write2IMG from "./images/write2.png";
-import write3IMG from "./images/write3.png";
-
 export default function Home() {
   return (
     <article className="w-[min(70ch,100%)] m-auto">
@@ -24,7 +19,7 @@ export default function Home() {
           trait <em>describes</em> a student, and a negative trait{" "}
           <em>tells</em> a student what to do.
         </p>
-        <img src={traitsIMG} alt="three states of the traits" />
+        <img src="traits.png" alt="three states of the traits" />
         <p>
           When they are active, they can generate comments based on their state,
           either commending the students or suggesting improvements. For
@@ -67,7 +62,7 @@ export default function Home() {
         </p>
       </section>
       <section>
-        <h2>Howto</h2>
+        <h2>How-to</h2>
         <p>
           Click the <strong>Commments</strong> button on the top menu to
           generate comments.
@@ -87,12 +82,12 @@ export default function Home() {
           achieved well in the Algebra topic and needs improvement in the
           Measurement topic.
         </p>
-        <img src={write1IMG} alt="including topics" />
+        <img src="write1.png" alt="including topics" />
         <p>
           The picture below shows a student who needs some practise in adding
           fractions.
         </p>
-        <img src={write2IMG} alt="including skills" />
+        <img src="write2.png" alt="including skills" />
         <h3>Traits</h3>
         <p>
           Each trait is classified according to the effort grade categories:
@@ -115,17 +110,33 @@ export default function Home() {
 
         <h3>Results</h3>
         <p>
-          You will see the randomly generated comments from here. The app will
-          show up to 12 comments, six commending and six suggesting ones.
+          Once the comments are downloaded, you will see the effort grades and
+          comments.
         </p>
 
-        <img src={write3IMG} alt="generated comments" />
+        <img src="write3.png" alt="generated effort grades" />
 
         <p>
-          One missing feature is the automatic conversion of verbs to their
-          present participle form (i.e. adding &quot;ing&quot; at the end),
-          which you need to do manually. I do not have plans to write the logic
-          any time soon, you are welcome to suggest me{" "}
+          The effort grades are calculated from the traits. The more the traits
+          in each criteria are marked as positive, the more grades the students
+          will receive. There is currently a cap of{" "}
+          <strong>six positive traits</strong> to receive a grade of 5.
+        </p>
+
+        <p>
+          You can drag and copy the values to paste them into Excel or other
+          programs, but it will also copy the styles. Use the{" "}
+          <strong>Copy</strong> button to copy the values only.
+        </p>
+
+        <img src="write4.png" alt="generated comments" />
+
+        <p>
+          There will be up to 12 comments, six commending and six suggesting.
+          One missing feature is the automatic conversion of verbs to gerends
+          (i.e. adding &quot;ing&quot; at the end), which you need to do
+          manually. I do not have plans to write the logic any time soon, you
+          are welcome to suggest me{" "}
           <A
             blank
             href="https://continuingstudies.uvic.ca/elc/studyzone/410/grammar/gerund"

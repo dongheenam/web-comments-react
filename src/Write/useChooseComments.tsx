@@ -16,7 +16,7 @@ export interface UseChooseComments {
   sortedComments: SortedComments;
   chosenComments: Comment[];
   setChosenComments: React.Dispatch<React.SetStateAction<Comment[]>>;
-  decoratedComments: Array<string>;
+  commentTextsList: Array<string>;
 }
 
 export type SortedComments = {
@@ -144,10 +144,10 @@ export default function useChooseComments({
     setChosenComments([...choice(positivePool, 6), ...choice(negativePool, 6)]);
   }, [sortedComments]);
 
-  const [decoratedComments, setDecoratedComments] = useState<Array<string>>([]);
+  const [commentTextsList, setCommentTextsList] = useState<Array<string>>([]);
   useEffect(() => {
     if (!chosenComments) return;
-    setDecoratedComments(
+    setCommentTextsList(
       chosenComments
         .map((comment) => `${comment.tone} ${comment.text}`)
         .map((text) => genderComment(text))
@@ -160,6 +160,6 @@ export default function useChooseComments({
     sortedComments,
     chosenComments,
     setChosenComments,
-    decoratedComments,
+    commentTextsList,
   };
 }

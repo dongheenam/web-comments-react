@@ -26,7 +26,7 @@ export default function Write() {
     skills: topicSkillState.skills,
     traitsStatus: traitsState.traitsStatus,
   });
-  const decoCommentsState = useChooseComments({
+  const chooseCommentsState = useChooseComments({
     gender: genderState.gender,
     topics: topicSkillState.topics,
     skills: topicSkillState.skills,
@@ -47,7 +47,7 @@ export default function Write() {
       </section>
       <section>
         <ShowResults
-          decoCommentsState={decoCommentsState}
+          chooseCommentsState={chooseCommentsState}
           effortGradeState={effortGradeState}
           setAppStatus={setAppStatus}
           clearingFunctions={{
@@ -82,7 +82,7 @@ export default function Write() {
             </Explanation>
             <Explanation>
               Comments selected:{" "}
-              {JSON.stringify(decoCommentsState.decoratedComments)}
+              {JSON.stringify(chooseCommentsState.commentTextsList)}
             </Explanation>
           </div>
         </details>
