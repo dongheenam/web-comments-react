@@ -75,6 +75,11 @@ export const traitsList = {
     "Follows HSC/IB course requirements?",
     "Follows HSC/IB course requirements",
   ],
+  "asse-po-port": [
+    "Need more effort towards portfolio",
+    "Maintains portfolio?",
+    "Maintains portfolio well",
+  ],
   "asse-ia-feed": [
     "Seek feedback from teacher",
     "Seeks feedback on assessment?",
