@@ -2,7 +2,6 @@ import {
   query,
   collection,
   where,
-  getDocs,
   Firestore,
   onSnapshot,
 } from "firebase/firestore";
@@ -28,26 +27,19 @@ export default function SelectComment({
   async function fetchComments() {
     if (traitToEdit === "othe-xx-undi") {
       setAppStatus("awaiting trait selection... ");
-      return [];
+      setCommentsFetched([]);
+      return;
     }
     const q = query(
       collection(db, "comments"),
       where("trait", "==", traitToEdit)
     );
-    const unload = onSnapshot(q, (querySnapshot) => {
+    onSnapshot(q, (querySnapshot) => {
       const commentsFromServer = querySnapshot.docs
         .map((doc) => doc.data() as Comment)
         .sort((ca, cb) => (ca.tone > cb.tone ? 1 : -1));
-
-      const emptyCommentWithTrait = {
-        ...emptyComment,
-        trait: traitToEdit,
-        type: traitToEdit.slice(0, 4) as keyof typeof typesList,
-      };
       setCommentsFetched(commentsFromServer);
-      setCommentToEdit(emptyCommentWithTrait);
     });
-    // const querySnapshot = await getDocs(q);
   }
   // fetch comments when user selects a trait
   useEffect(() => {
@@ -57,6 +49,13 @@ export default function SelectComment({
       })
       .catch((error) => {
         setAppStatus(`error occurred while fetching the traits: ${error}`);
+      })
+      .finally(() => {
+        setCommentToEdit({
+          ...emptyComment,
+          trait: traitToEdit,
+          type: traitToEdit.slice(0, 4) as keyof typeof typesList,
+        });
       });
   }, [traitToEdit]);
 

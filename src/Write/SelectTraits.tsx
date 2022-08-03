@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { togglableTraitsList } from "../Comments";
 import {
   Button,
@@ -147,7 +148,7 @@ export default function SelectTraits({
             { title: "Meeting Deadlines", code: "md" },
             { title: "Others", code: "xx" },
           ].map(({ title, code }) => (
-            <>
+            <Fragment key={code}>
               <Explanation>{title}</Explanation>
               <div className="mb-4 grid grid-cols-3 gap-2 justify-items-stretch text-base">
                 {Object.entries(togglableTraitsList)
@@ -172,7 +173,7 @@ export default function SelectTraits({
                     </TraitButton>
                   ))}
               </div>
-            </>
+            </Fragment>
           ))}
         </div>
         <span></span>

@@ -1,7 +1,7 @@
 import { collection, Firestore, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { typesList, traitsList, Trait } from "../Comments";
-import { Explanation, LabelButton, Radio } from "../components";
+import { LabelButton, Radio } from "../components";
 
 interface SelectCommentProps {
   db: Firestore;
@@ -30,7 +30,12 @@ export default function SelectTrait({
   useEffect(() => {
     fetchTraitsFromCounts()
       .then((traits) => {
-        setTraitsFetched(traits);
+        // merge fetched list with local list
+        const mergedTraitCodes = [
+          ...traits,
+          ...Object.keys(traitsList),
+        ] as Trait[];
+        setTraitsFetched([...new Set(mergedTraitCodes)].sort());
         setAppStatus("loaded traits from server! Ready to begin... ");
       })
       .catch((error) => console.error(error));
