@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { makePronouns, Trait } from "../Comments";
 import type { Comment, Gender } from "../Comments";
-import { choice } from "../util";
+import { choice } from "../common/util";
 import { TopicSkill } from "./useTopicSkills";
 
 interface UseChooseCommentsProps {

@@ -5,7 +5,7 @@ import { useFirebase } from "../firebase";
 import type { TraitsStatus } from "./useTraits";
 import type { Comment } from "../Comments";
 import type { TopicSkill } from "./useTopicSkills";
-import { choice } from "../util";
+import { choice } from "../common/util";
 
 interface UseFetchCommentsProps {
   setAppStatus: React.Dispatch<React.SetStateAction<string>>;

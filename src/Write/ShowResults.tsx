@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { EffortGrades } from "../Comments";
 import { Button } from "../components";
-import { round, sum } from "../util";
+import { round, sum } from "../common/util";
 import AdjustComments from "./AdjustComments";
 
 import { UseChooseComments } from "./useChooseComments";

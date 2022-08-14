@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Comment, Trait, traitsList } from "../Comments";
 import { Checkbox, LabelButton } from "../components";
-import { choice } from "../util";
+import { choice } from "../common/util";
 import { SortedComments } from "./useChooseComments";
 
 interface AdjustCommentsProp {

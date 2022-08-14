@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { effortStrands } from "../Comments";
 import type { EffortGrades } from "../Comments";
 import type { TraitsStatus } from "./useTraits";
-import { sum } from "../util";
+import { sum } from "../common/util";
 
 interface EffortGradeProps {
   traitsStatus: TraitsStatus;
