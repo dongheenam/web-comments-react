@@ -154,14 +154,6 @@ export default function Home() {
         </p>
       </section>
       <section>
-        <h2>Updates</h2>
-        <p>
-          The app is still in its alpha stage, and there may be some bugs and
-          many traits are missing their comments. I expect every trait will have
-          at least one positive and one negative comment before September.
-        </p>
-      </section>
-      <section>
         <h2>Acknowledgements</h2>
         <p>
           {"The favicon was generated using the graphics from "}
